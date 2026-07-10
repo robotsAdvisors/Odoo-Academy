@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="fundador_digital_page" name="Fundador Digital Interactive">
+        <t t-call="website.layout">
+            <div class="container py-5">
+                <h1 class="mb-2">Fundador Digital - Nivel 0</h1>
+                <p class="text-muted mb-4">Toma decisiones guiadas y recibe una recomendacion de ruta en Odoo.</p>
+
+                <div class="progress mb-4" role="progressbar" aria-label="Progress">
+                    <t t-set="progress" t-value="(answered_questions * 100 // (total_questions or 1))"/>
+                    <div class="progress-bar" t-att-style="'width: ' + str(progress) + '%'">
+                        <t t-esc="progress"/>%
+                    </div>
+                </div>
+
+                <t t-if="session.state == 'done'">
+                    <div class="card border-success shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">Resultado de tu decision</h3>
+                            <p class="card-text" t-esc="session.result_summary"/>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Edicion recomendada:</strong> <span t-esc="result_payload.get('edition_label')"/></li>
+                                <li class="list-group-item"><strong>Arquitectura recomendada:</strong> <span t-esc="result_payload.get('architecture_label')"/></li>
+                                <li class="list-group-item"><strong>Ruta recomendada:</strong> <span t-esc="result_payload.get('track_label')"/></li>
+                            </ul>
+
+                            <div class="row g-3 mt-1">
+                                <div class="col-lg-7">
+                                    <div class="card bg-light border-0 h-100">
+                                        <div class="card-body">
+                                            <h4 class="h5 mb-3">Checklist recomendado</h4>
+                                            <t t-foreach="result_payload.get('checklist_sections', [])" t-as="section">
+                                                <div class="mb-3">
+                                                    <h5 class="h6 text-uppercase text-muted" t-esc="section.get('title')"/>
+                                                    <ul class="list-group list-group-flush">
+                                                        <t t-foreach="section.get('items', [])" t-as="item">
+                                                            <li class="list-group-item bg-transparent px-0">
+                                                                <span class="me-2">&#10003;</span>
+                                                                <span t-esc="item"/>
+                                                            </li>
+                                                        </t>
+                                                    </ul>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5">
+                                    <div class="card border-0 shadow-sm h-100">
+                                        <div class="card-body">
+                                            <h4 class="h5 mb-3">Diagnostico segun tu caso</h4>
+                                            <t t-foreach="result_payload.get('contextual_items', [])" t-as="item">
+                                                <div class="border rounded p-3 mb-3">
+                                                    <div class="d-flex justify-content-between align-items-start gap-2">
+                                                        <strong t-esc="item.get('name')"/>
+                                                        <span class="badge rounded-pill"
+                                                              t-att-class="'text-bg-success' if item.get('status') == 'active' else ('text-bg-secondary' if item.get('status') == 'base' else 'text-bg-warning')">
+                                                            <t t-if="item.get('status') == 'active'">Activado por tu caso</t>
+                                                            <t t-elif="item.get('status') == 'base'">Base de la ruta</t>
+                                                            <t t-else="">Fase posterior</t>
+                                                        </span>
+                                                    </div>
+                                                    <p class="text-muted mb-0 mt-2" t-esc="item.get('reason')"/>
+                                                </div>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card border-0 bg-light mt-3">
+                                <div class="card-body">
+                                    <h4 class="h5 mb-3">Resumen de respuestas</h4>
+                                    <ul class="list-group list-group-flush">
+                                        <t t-foreach="result_payload.get('answers', [])" t-as="answer">
+                                            <li class="list-group-item bg-transparent px-0">
+                                                <strong t-esc="answer.get('question')"/>:
+                                                <span t-esc="answer.get('option')"/>
+                                            </li>
+                                        </t>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 mt-3">
+                                <a t-att-href="'/academy/fundador-digital/report/%s?db=%s' % (session.id, request.db or '')" class="btn btn-primary">Descargar PDF</a>
+                                <a href="/academy/fundador-digital?new=1" class="btn btn-outline-primary">Iniciar una nueva sesion</a>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+
+                <t t-else="">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title" t-esc="question.title"/>
+                            <p class="card-text text-muted" t-if="question.help_text" t-esc="question.help_text"/>
+
+                            <form action="/academy/fundador-digital/answer" method="post" class="mt-4">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" name="session_id" t-att-value="session.id"/>
+                                <div class="d-grid gap-2">
+                                    <t t-foreach="question.option_ids.sorted('sequence')" t-as="option">
+                                        <button type="submit" name="option_id" t-att-value="option.id" class="btn btn-lg btn-outline-primary text-start">
+                                            <span t-esc="option.label"/>
+                                        </button>
+                                    </t>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

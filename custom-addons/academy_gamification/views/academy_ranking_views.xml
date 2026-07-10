@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gamification_ranking_list" model="ir.ui.view">
+        <field name="name">res.users.gamification.ranking.list</field>
+        <field name="model">res.users</field>
+        <field name="arch" type="xml">
+            <list string="Gamification Ranking" create="false" delete="false" edit="false" default_order="gamification_points desc">
+                <field name="gamification_rank" string="#"/>
+                <field name="name"/>
+                <field name="gamification_points"/>
+                <field name="gamification_level"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_gamification_ranking" model="ir.actions.act_window">
+        <field name="name">Ranking</field>
+        <field name="res_model">res.users</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_gamification_ranking_list"/>
+        <field name="domain">[("share", "=", False), ("active", "=", True)]</field>
+    </record>
+
+    <menuitem id="menu_academy_ranking" name="Ranking" parent="menu_academy_gamification_root" action="action_gamification_ranking" sequence="20"/>
+</odoo>

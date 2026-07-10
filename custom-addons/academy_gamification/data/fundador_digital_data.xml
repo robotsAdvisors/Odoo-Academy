@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="academy_decision_flow_fundador_digital" model="academy.decision.flow">
+        <field name="name">Fundador Digital Nivel 0</field>
+        <field name="code">fundador_digital</field>
+        <field name="description">Flujo inicial para recomendar edicion, arquitectura y ruta del alumno.</field>
+        <field name="points_reward">250</field>
+    </record>
+
+    <record id="academy_decision_question_business_type" model="academy.decision.question">
+        <field name="flow_id" ref="academy_decision_flow_fundador_digital"/>
+        <field name="sequence">10</field>
+        <field name="title">Cual describe mejor tu negocio principal?</field>
+        <field name="help_text">Esta decision define la ruta inicial entre Ecommerce y Hosteleria.</field>
+        <field name="is_start">True</field>
+    </record>
+
+    <record id="academy_decision_question_speed" model="academy.decision.question">
+        <field name="flow_id" ref="academy_decision_flow_fundador_digital"/>
+        <field name="sequence">20</field>
+        <field name="title">Que prioridad tienes para salir a produccion?</field>
+        <field name="help_text">Rapidez favorece soluciones gestionadas; control favorece infraestructura propia.</field>
+    </record>
+
+    <record id="academy_decision_question_customization" model="academy.decision.question">
+        <field name="flow_id" ref="academy_decision_flow_fundador_digital"/>
+        <field name="sequence">30</field>
+        <field name="title">Que nivel de personalizacion tecnica necesitas?</field>
+        <field name="help_text">Mas personalizacion suele inclinar la recomendacion hacia Community.</field>
+    </record>
+
+    <record id="academy_decision_question_team" model="academy.decision.question">
+        <field name="flow_id" ref="academy_decision_flow_fundador_digital"/>
+        <field name="sequence">40</field>
+        <field name="title">Tienes equipo tecnico interno para administrar Odoo?</field>
+        <field name="help_text">Esta respuesta ajusta la recomendacion final de edicion y arquitectura.</field>
+    </record>
+
+    <record id="academy_decision_option_business_ecommerce" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_business_type"/>
+        <field name="sequence">10</field>
+        <field name="label">Vendemos principalmente online (tienda digital).</field>
+        <field name="next_question_id" ref="academy_decision_question_speed"/>
+        <field name="score_ecommerce">3</field>
+    </record>
+
+    <record id="academy_decision_option_business_hospitality" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_business_type"/>
+        <field name="sequence">20</field>
+        <field name="label">Somos restaurante/cafeteria/hosteleria.</field>
+        <field name="next_question_id" ref="academy_decision_question_speed"/>
+        <field name="score_hospitality">3</field>
+    </record>
+
+    <record id="academy_decision_option_speed_fast" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_speed"/>
+        <field name="sequence">10</field>
+        <field name="label">Salir rapido con minima complejidad tecnica.</field>
+        <field name="next_question_id" ref="academy_decision_question_customization"/>
+        <field name="score_simple">3</field>
+        <field name="score_enterprise">2</field>
+    </record>
+
+    <record id="academy_decision_option_speed_control" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_speed"/>
+        <field name="sequence">20</field>
+        <field name="label">Tener control tecnico y escalabilidad avanzada.</field>
+        <field name="next_question_id" ref="academy_decision_question_customization"/>
+        <field name="score_control">3</field>
+        <field name="score_community">2</field>
+    </record>
+
+    <record id="academy_decision_option_customization_low" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_customization"/>
+        <field name="sequence">10</field>
+        <field name="label">Baja: usar estandar con pocos cambios.</field>
+        <field name="next_question_id" ref="academy_decision_question_team"/>
+        <field name="score_enterprise">2</field>
+    </record>
+
+    <record id="academy_decision_option_customization_high" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_customization"/>
+        <field name="sequence">20</field>
+        <field name="label">Alta: integrar y personalizar en profundidad.</field>
+        <field name="next_question_id" ref="academy_decision_question_team"/>
+        <field name="score_community">3</field>
+        <field name="score_control">1</field>
+    </record>
+
+    <record id="academy_decision_option_team_yes" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_team"/>
+        <field name="sequence">10</field>
+        <field name="label">Si, tenemos equipo tecnico interno.</field>
+        <field name="score_community">2</field>
+        <field name="score_control">2</field>
+    </record>
+
+    <record id="academy_decision_option_team_no" model="academy.decision.option">
+        <field name="question_id" ref="academy_decision_question_team"/>
+        <field name="sequence">20</field>
+        <field name="label">No, preferimos bajo mantenimiento tecnico.</field>
+        <field name="score_enterprise">2</field>
+        <field name="score_simple">2</field>
+    </record>
+</odoo>

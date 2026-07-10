@@ -1,0 +1,50 @@
+services:
+  db:
+    image: postgres:16
+    container_name: odoo_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+    networks:
+      - odoo_net
+
+  odoo:
+    image: odoo:18.0
+    container_name: odoo_app
+    restart: unless-stopped
+    depends_on:
+      - db
+    volumes:
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+      - ./custom-addons:/mnt/extra-addons
+      - odoo-data:/var/lib/odoo
+    command: ["odoo", "-c", "/etc/odoo/odoo.conf"]
+    expose:
+      - "8069"
+      - "8072"
+    networks:
+      - odoo_net
+
+  nginx:
+    image: nginx:alpine
+    container_name: odoo_nginx
+    restart: unless-stopped
+    depends_on:
+      - odoo
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - odoo_net
+
+volumes:
+  odoo-data:
+
+networks:
+  odoo_net:
+    driver: bridge

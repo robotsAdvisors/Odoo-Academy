@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_academy_gamification_mission_user,academy.gamification.mission user,model_academy_gamification_mission,base.group_user,1,1,1,1
+access_academy_decision_flow_admin,academy.decision.flow admin,model_academy_decision_flow,base.group_system,1,1,1,1
+access_academy_decision_question_admin,academy.decision.question admin,model_academy_decision_question,base.group_system,1,1,1,1
+access_academy_decision_option_admin,academy.decision.option admin,model_academy_decision_option,base.group_system,1,1,1,1
+access_academy_decision_session_admin,academy.decision.session admin,model_academy_decision_session,base.group_system,1,1,1,1
+access_academy_decision_answer_admin,academy.decision.answer admin,model_academy_decision_answer,base.group_system,1,1,1,1
+access_academy_decision_flow_user,academy.decision.flow user,model_academy_decision_flow,base.group_user,1,1,1,0
+access_academy_decision_question_user,academy.decision.question user,model_academy_decision_question,base.group_user,1,1,1,0
+access_academy_decision_option_user,academy.decision.option user,model_academy_decision_option,base.group_user,1,1,1,0
+access_academy_decision_session_user,academy.decision.session user,model_academy_decision_session,base.group_user,1,1,1,0
+access_academy_decision_answer_user,academy.decision.answer user,model_academy_decision_answer,base.group_user,1,1,1,0

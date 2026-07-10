@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_academy_mission_tree" model="ir.ui.view">
+        <field name="name">academy.gamification.mission.tree</field>
+        <field name="model">academy.gamification.mission</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="points"/>
+                <field name="state"/>
+                <field name="completion_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_academy_mission_form" model="ir.ui.view">
+        <field name="name">academy.gamification.mission.form</field>
+        <field name="model">academy.gamification.mission</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_mark_done" string="Mark as Done" type="object" class="btn-primary" invisible="state == 'done'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="user_id"/>
+                        <field name="points"/>
+                        <field name="completion_date" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_academy_mission_search" model="ir.ui.view">
+        <field name="name">academy.gamification.mission.search</field>
+        <field name="model">academy.gamification.mission</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <filter name="filter_draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="filter_done" string="Done" domain="[('state', '=', 'done')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_academy_mission" model="ir.actions.act_window">
+        <field name="name">Missions</field>
+        <field name="res_model">academy.gamification.mission</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Create your first mission</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_academy_gamification_root" name="Learning Gamification" sequence="10"/>
+    <menuitem id="menu_academy_mission" name="Missions" parent="menu_academy_gamification_root" action="action_academy_mission" sequence="10"/>
+</odoo>

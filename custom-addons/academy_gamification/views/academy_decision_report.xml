@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_academy_decision_session_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="session">
+                <t t-call="web.external_layout">
+                    <t t-set="payload" t-value="session.get_result_payload()"/>
+                    <div class="page">
+                        <h2>Diagnostico Fundador Digital</h2>
+                        <p>
+                            <strong>Alumno:</strong>
+                            <span t-esc="session.partner_id.name or session.user_id.name"/>
+                        </p>
+                        <p>
+                            <strong>Fecha:</strong>
+                            <span t-esc="session.completed_at"/>
+                        </p>
+
+                        <h3>Resultado</h3>
+                        <ul>
+                            <li><strong>Edicion recomendada:</strong> <span t-esc="payload.get('edition_label')"/></li>
+                            <li><strong>Arquitectura recomendada:</strong> <span t-esc="payload.get('architecture_label')"/></li>
+                            <li><strong>Ruta recomendada:</strong> <span t-esc="payload.get('track_label')"/></li>
+                        </ul>
+
+                        <h3>Checklist por ruta</h3>
+                        <t t-foreach="payload.get('checklist_sections', [])" t-as="section">
+                            <h4 t-esc="section.get('title')"/>
+                            <ul>
+                                <t t-foreach="section.get('items', [])" t-as="item">
+                                    <li t-esc="item"/>
+                                </t>
+                            </ul>
+                        </t>
+
+                        <h3>Diagnostico contextual</h3>
+                        <ul>
+                            <t t-foreach="payload.get('contextual_items', [])" t-as="item">
+                                <li>
+                                    <strong t-esc="item.get('name')"/>:
+                                    <span t-esc="item.get('reason')"/>
+                                </li>
+                            </t>
+                        </ul>
+
+                        <h3>Resumen de respuestas</h3>
+                        <ul>
+                            <t t-foreach="payload.get('answers', [])" t-as="answer">
+                                <li>
+                                    <strong t-esc="answer.get('question')"/>:
+                                    <span t-esc="answer.get('option')"/>
+                                </li>
+                            </t>
+                        </ul>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_academy_decision_session" model="ir.actions.report">
+        <field name="name">Diagnostico Fundador Digital</field>
+        <field name="model">academy.decision.session</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">academy_gamification.report_academy_decision_session_document</field>
+        <field name="report_file">academy_gamification.report_academy_decision_session_document</field>
+        <field name="binding_model_id" ref="model_academy_decision_session"/>
+    </record>
+</odoo>
