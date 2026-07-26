@@ -203,7 +203,7 @@
                                     <div class="academy-price-box mb-0">
                                         <p class="mb-1">Precio lanzamiento</p>
                                         <h2 class="mb-2">22 EUR</h2>
-                                        <a href="/academy/fundador-digital" class="academy-btn">QUIERO ACCEDER AHORA</a>
+                                        <a href="/academy/inscripcion" class="academy-btn">QUIERO ACCEDER AHORA</a>
                                     </div>
                                 </div>
                             </div>
@@ -426,7 +426,7 @@
         <xpath expr="//section[hasclass('s_text_block')]//ul[hasclass('list-unstyled') and hasclass('mb-2')]" position="replace">
             <ul class="list-unstyled mb-2">
                 <li><i class="fa fa-envelope fa-fw me-2"/><span><a href="mailto:contacto@robotsconsultant.com">contacto@robotsconsultant.com</a></span></li>
-                <li><i class="fa fa-phone fa-fw me-2"/><span class="o_force_ltr"><a href="tel:+34XXXXXXXXX">+34 XXX XXX XXX</a></span></li>
+                <li><i class="fa fa-phone fa-fw me-2"/><span class="o_force_ltr"><a href="tel:+34641526150">+34 641526150</a></span></li>
                 <li><i class="fa fa-map-marker fa-fw me-2"/><span>Madrid, Espana</span></li>
                 <li><i class="fa fa-globe fa-fw me-2"/><span><a href="https://www.robotsconsultant.com" target="_blank">www.robotsconsultant.com</a></span></li>
             </ul>

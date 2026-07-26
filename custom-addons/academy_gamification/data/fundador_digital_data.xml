@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <function model="ir.config_parameter" name="set_param" eval="('web.base.url', 'https://cursos.robotsconsultant.net')"/>
+    <function model="ir.config_parameter" name="set_param" eval="('web.base.url.freeze', 'True')"/>
+
+    <!-- ──────────────────────────────────────────
+         Producto: Curso Fundador Digital
+    ────────────────────────────────────────── -->
+    <record id="product_academy_fundador_digital" model="product.template">
+        <field name="name">Fundador Digital – Acceso al curso</field>
+        <field name="default_code">ACADEMY-FUNDADOR-DIGITAL</field>
+        <field name="type">service</field>
+        <field name="list_price">22.0</field>
+        <field name="sale_ok">True</field>
+        <field name="purchase_ok">False</field>
+        <field name="invoice_policy">order</field>
+        <field name="description_sale">Acceso completo al curso Fundador Digital: digitaliza tu negocio con Odoo.</field>
+    </record>
+
+    <!-- ──────────────────────────────────────────
+         Email de bienvenida tras el pago
+    ────────────────────────────────────────── -->
+    <record id="mail_template_academy_course_welcome" model="mail.template">
+        <field name="name">Academy – Bienvenida Fundador Digital</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">¡Tu acceso al curso Fundador Digital está listo!</field>
+        <field name="email_from">{{ (object.company_id.email or user.email) | safe }}</field>
+        <field name="email_to">{{ object.email | safe }}</field>
+        <field name="body_html" type="html">
+<![CDATA[
+<div style="font-family: 'IBM Plex Sans', Arial, sans-serif; max-width: 600px; margin: auto; background: #f6f4ef; padding: 32px; border-radius: 12px;">
+  <div style="background: #0f766e; border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 24px;">
+    <h1 style="color: #ffffff; font-size: 22px; margin: 0;">¡Bienvenido/a al curso!</h1>
+    <p style="color: #d1fae5; margin: 8px 0 0;">Fundador Digital – Digitaliza tu negocio con Odoo</p>
+  </div>
+
+  <p style="font-size: 16px; color: #111827;">Hola <strong>{{ object.name }}</strong>,</p>
+  <p style="color: #475467;">Tu pago se ha confirmado correctamente. Ya tienes acceso completo al curso.</p>
+
+  <div style="background: #ffffff; border: 1px solid #d4d4d8; border-radius: 8px; padding: 20px; margin: 24px 0;">
+    <p style="margin: 0 0 8px; font-weight: 600; color: #111827;">Tus datos de acceso:</p>
+    <p style="margin: 4px 0; color: #475467;">📧 <strong>Usuario:</strong> {{ object.email }}</p>
+    <p style="margin: 4px 0; color: #475467;">🔑 Recibirás un segundo email para <strong>establecer tu contraseña</strong>.</p>
+  </div>
+
+  <div style="text-align: center; margin: 32px 0;">
+    <a href="/academy/fundador-digital"
+       style="background: #0f766e; color: #ffffff; padding: 14px 32px; border-radius: 8px;
+              text-decoration: none; font-weight: 700; font-size: 16px; display: inline-block;">
+      Acceder al curso →
+    </a>
+  </div>
+
+  <p style="color: #9ca3af; font-size: 13px; text-align: center; margin-top: 32px;">
+    Si tienes cualquier duda, responde a este email y te ayudamos.
+  </p>
+</div>
+]]>
+        </field>
+        <field name="auto_delete">True</field>
+    </record>
+
+    <!-- ──────────────────────────────────────────
+         Flujo de decisión
+    ────────────────────────────────────────── -->
     <record id="academy_decision_flow_fundador_digital" model="academy.decision.flow">
         <field name="name">Fundador Digital Nivel 0</field>
         <field name="code">fundador_digital</field>

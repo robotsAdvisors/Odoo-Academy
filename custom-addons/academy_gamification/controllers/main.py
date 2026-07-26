@@ -1,8 +1,12 @@
 from odoo import http
 from odoo.http import request
+from odoo.addons.payment import utils as payment_utils
 from werkzeug.exceptions import NotFound
 import json
+import logging
 import re
+
+_logger = logging.getLogger(__name__)
 
 
 LINKEDIN_POSTS_PARAM = "academy_gamification.linkedin_posts"
@@ -304,3 +308,80 @@ class AcademyDecisionController(http.Controller):
             ("Content-Disposition", f'attachment; filename="{filename}"'),
         ]
         return request.make_response(pdf_content, headers=headers)
+
+    # ──────────────────────────────────────────────────────────────────
+    #  Inscripción + pago directo con Stripe
+    # ──────────────────────────────────────────────────────────────────
+
+    @http.route('/academy/inscripcion', type='http', auth='public', website=True, methods=['GET'])
+    def academy_inscripcion_form(self, **kwargs):
+        """Muestra el formulario de captura de nombre y email antes del pago."""
+        return request.render('academy_gamification.academy_inscripcion_form')
+
+    @http.route('/academy/inscripcion', type='http', auth='public', website=True, methods=['POST'], csrf=True)
+    def academy_inscripcion_submit(self, nombre='', email='', **kwargs):
+        """Crea partner + orden de venta y redirige a la página de pago del portal."""
+        nombre = (nombre or '').strip()
+        email = (email or '').strip().lower()
+
+        error_vals = {'nombre': nombre, 'email': email}
+
+        if not nombre or not email:
+            return request.render(
+                'academy_gamification.academy_inscripcion_form',
+                {**error_vals, 'error': 'Por favor completa todos los campos.'},
+            )
+
+        if not re.match(r'^[^@\s]+@[^@\s]+\.[^@\s]+$', email):
+            return request.render(
+                'academy_gamification.academy_inscripcion_form',
+                {**error_vals, 'error': 'El formato del email no es válido.'},
+            )
+
+        env = request.env
+
+        # ── Partner ──────────────────────────────────────────────────
+        Partner = env['res.partner'].sudo()
+        partner = Partner.search([('email', '=', email)], limit=1)
+        if not partner:
+            partner = Partner.create({'name': nombre, 'email': email})
+
+        # ── Moneda EUR ───────────────────────────────────────────────
+        currency = env['res.currency'].sudo().search([('name', '=', 'EUR')], limit=1)
+        if not currency:
+            currency = env['res.currency'].sudo().browse(1)
+
+        # ── Producto ─────────────────────────────────────────────────
+        product = env['product.product'].sudo().search(
+            [('default_code', '=', 'ACADEMY-FUNDADOR-DIGITAL')], limit=1
+        )
+        if not product:
+            _logger.error('Academy checkout: product ACADEMY-FUNDADOR-DIGITAL not found.')
+            return request.render(
+                'academy_gamification.academy_inscripcion_form',
+                {**error_vals, 'error': 'Error interno. Por favor contacta con soporte.'},
+            )
+
+        # ── Orden de venta ───────────────────────────────────────────
+        order = env['sale.order'].sudo().create({
+            'partner_id': partner.id,
+            'currency_id': currency.id,
+            'order_line': [(0, 0, {
+                'product_id': product.id,
+                'name': product.name,
+                'product_uom_qty': 1.0,
+                'price_unit': 22.0,
+            })],
+        })
+        order._portal_ensure_token()
+
+        # ── Redirige al portal de la orden para que el usuario pague ─
+        # El portal muestra el resumen del pedido con el botón "Pagar"
+        # que lanza el formulario de Stripe de Odoo.
+        portal_url = f'/my/orders/{order.id}?access_token={order.access_token}'
+        return request.redirect(portal_url)
+
+    @http.route('/academy/gracias', type='http', auth='public', website=True)
+    def academy_pago_gracias(self, **kwargs):
+        """Página de confirmación post-pago (landing opcional)."""
+        return request.render('academy_gamification.academy_pago_gracias')
