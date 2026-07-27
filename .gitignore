@@ -1,0 +1,23 @@
+# --- Secretos --------------------------------------------------
+# odoo.conf lleva admin_passwd y db_password: se despliega desde
+# odoo.conf.example y se rellena en el servidor.
+infraestructura/.env
+infraestructura/config/odoo.conf
+
+# --- Datos en disco --------------------------------------------
+infraestructura/postgresql/
+infraestructura/nginx/dummy-certs/
+
+# --- Python ----------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# --- Entorno ---------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

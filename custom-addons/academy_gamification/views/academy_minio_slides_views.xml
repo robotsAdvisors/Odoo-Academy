@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_slide_slide_form_inherit_academy_minio" model="ir.ui.view">
+        <field name="name">slide.slide.form.inherit.academy.minio</field>
+        <field name="model">slide.slide</field>
+        <field name="inherit_id" ref="website_slides.view_slide_slide_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='video_url']" position="attributes">
+                <attribute name="placeholder">e.g. https://minio.example.com/odoo-videos/lesson-1.mp4</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

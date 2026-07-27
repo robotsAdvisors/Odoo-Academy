@@ -135,6 +135,8 @@
 
                     <form action="/academy/inscripcion" method="POST">
                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <!-- Arrastra el curso elegido en la landing hasta el POST -->
+                        <input type="hidden" name="curso" t-att-value="curso or ''"/>
 
                         <label class="insc-label" for="insc_nombre">Nombre completo</label>
                         <input class="insc-input" type="text" id="insc_nombre" name="nombre"

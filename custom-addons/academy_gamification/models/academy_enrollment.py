@@ -4,7 +4,14 @@ from odoo import models
 
 _logger = logging.getLogger(__name__)
 
-COURSE_PRODUCT_CODE = 'ACADEMY-FUNDADOR-DIGITAL'
+# Producto vendido -> canal de eLearning en el que inscribir al comprador.
+# ACADEMY-FUNDADOR-DIGITAL se mantiene por los pedidos ya existentes; no
+# tiene canal propio, asi que solo genera usuario del portal y bienvenida.
+COURSE_PRODUCT_CHANNELS = {
+    'ACADEMY-ECOMMERCE': 'academy_gamification.channel_academy_ecommerce',
+    'ACADEMY-HOSTELERIA': 'academy_gamification.channel_academy_hosteleria',
+    'ACADEMY-FUNDADOR-DIGITAL': None,
+}
 
 
 class AcademyPaymentTransaction(models.Model):
@@ -35,16 +42,19 @@ class AcademyPaymentTransaction(models.Model):
             ('transaction_ids', 'in', [tx.id]),
         ])
         partner = None
+        channel_xmlids = set()
         for order in orders:
             for line in order.order_line:
-                if line.product_id.default_code == COURSE_PRODUCT_CODE:
+                code = line.product_id.default_code
+                if code in COURSE_PRODUCT_CHANNELS:
                     partner = order.partner_id
-                    break
-            if partner:
-                break
+                    if COURSE_PRODUCT_CHANNELS[code]:
+                        channel_xmlids.add(COURSE_PRODUCT_CHANNELS[code])
 
         if not partner:
             return  # Not a course purchase – nothing to do.
+
+        self._academy_enroll_in_channels(partner, channel_xmlids)
 
         user, is_new = self._academy_get_or_create_portal_user(partner)
         if user:
@@ -59,6 +69,25 @@ class AcademyPaymentTransaction(models.Model):
                     )
             # Always send the custom course welcome email.
             self._academy_send_welcome_email(user)
+
+    def _academy_enroll_in_channels(self, partner, channel_xmlids):
+        """Da de alta al comprador en los canales de eLearning comprados."""
+        for xmlid in channel_xmlids:
+            channel = self.env.ref(xmlid, raise_if_not_found=False)
+            if not channel:
+                _logger.warning('Academy enrollment: channel %s not found.', xmlid)
+                continue
+            try:
+                # _action_add_members es idempotente: si ya es miembro, no duplica.
+                channel.sudo()._action_add_members(partner)
+                _logger.info(
+                    'Academy enrollment: %s enrolled in %s.', partner.email, xmlid
+                )
+            except Exception:
+                _logger.exception(
+                    'Academy enrollment: could not enroll %s in %s.',
+                    partner.email, xmlid,
+                )
 
     def _academy_get_or_create_portal_user(self, partner):
         """Return (user, is_new).  Creates a portal user if none exists."""

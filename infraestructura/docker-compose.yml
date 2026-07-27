@@ -1,47 +1,77 @@
+# =============================================================
+# Stack: Postgres + Odoo 18 + MinIO + Nginx + Certbot
+#
+# Las credenciales y las rutas salen de un fichero .env en ESTE
+# directorio. Copia .env.example a .env y rellénalo antes de nada.
+#
+# OJO con COMPOSE_PROJECT_NAME en .env: de él cuelgan los nombres de
+# los volúmenes (<proyecto>_odoo-data contiene el filestore). Si cambia,
+# Docker crea volúmenes NUEVOS Y VACÍOS y parecerá que se han perdido
+# los adjuntos. En producción vale odoo-docker; no lo toques.
+# =============================================================
 services:
   db:
     image: postgres:16
+    container_name: odoo_db
     restart: unless-stopped
     environment:
       POSTGRES_DB: postgres
-      POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo
+      POSTGRES_USER: ${POSTGRES_USER:?falta POSTGRES_USER en .env}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?falta POSTGRES_PASSWORD en .env}
+      # NO añadir PGDATA con un subdirectorio: si el cluster ya existe en
+      # la raíz del volumen, Postgres vería un directorio vacío, haría
+      # initdb de un cluster nuevo y la base de datos actual "desaparecería".
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - odoo_net
 
   odoo:
     image: odoo:18.0
+    container_name: odoo_app
     restart: unless-stopped
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
-      - ./config/odoo.conf:/etc/odoo/odoo.conf
-      - ./custom-addons:/mnt/extra-addons
+      # :ro — Odoo nunca debe reescribir su propia configuración
+      - ./config/odoo.conf:/etc/odoo/odoo.conf:ro
+      # En el repo custom-addons está en la raíz (../custom-addons).
+      # En el servidor vive dentro del propio directorio del proyecto,
+      # así que allí ADDONS_PATH=./custom-addons en el .env.
+      - ${ADDONS_PATH:-../custom-addons}:/mnt/extra-addons
       - odoo-data:/var/lib/odoo
     command: ["odoo", "-c", "/etc/odoo/odoo.conf"]
     expose:
-      - "8069"
-      - "8072"
+      - "8069"   # HTTP
+      - "8072"   # gevent / websocket — requiere workers > 0 en odoo.conf
     networks:
       - odoo_net
 
   minio:
     image: minio/minio:latest
+    container_name: odoo_minio
     restart: unless-stopped
     environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123  # Cambia esto antes de desplegar
-      MINIO_BROWSER_REDIRECT_URL: https://minio.tudominio.com  # Ajusta al dominio real
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?falta MINIO_ROOT_USER en .env}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?falta MINIO_ROOT_PASSWORD en .env}
+      MINIO_BROWSER_REDIRECT_URL: ${MINIO_BROWSER_REDIRECT_URL}
     command: server /data --console-address ":9001"
     volumes:
       - minio-data:/data
-    expose:
-      - "9000"  # API S3
-      - "9001"  # Consola web
+    # PENDIENTE: mientras s3./minio. no tengan DNS ni certificado, la
+    # consola y la API van por IP y SIN TLS, expuestas a Internet.
+    # Al activar nginx/minio.conf.disabled, sustituye 'ports' por 'expose'.
+    ports:
+      - "9000:9000"   # API S3
+      - "9001:9001"   # Consola web
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -50,15 +80,16 @@ services:
 
   nginx:
     image: nginx:alpine
+    container_name: odoo_nginx
     restart: unless-stopped
     depends_on:
       - odoo
-      - minio
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      # Sin este volumen nginx no ve los certificados y no puede servir TLS
       - certbot-conf:/etc/letsencrypt:ro
       - certbot-www:/var/www/certbot:ro
     networks:
@@ -66,11 +97,24 @@ services:
 
   certbot:
     image: certbot/certbot:latest
+    container_name: odoo_certbot
     volumes:
       - certbot-conf:/etc/letsencrypt
       - certbot-www:/var/www/certbot
-    # No se ejecuta como daemon — se lanza con: docker compose run --rm certbot <comando>
-    entrypoint: /bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done'
+    # Servicio de un solo uso: NO arranca con 'docker compose up'.
+    # Se invoca desde scripts/init_certs.sh y scripts/renew_certs.sh
+    # con 'docker compose run --rm certbot ...' (run activa el perfil solo).
+    #
+    # El entrypoint anterior era un bucle 'certbot renew' que además
+    # llegó a corromperse con un comando pegado dentro de la cadena
+    # ("wait cd /root/odoo-docker && docker compose pull..."), de ahí el
+    # "Illegal number: cd" y los 11 días en Exited(2). Aparte, aunque
+    # hubiese funcionado, renovaba sin recargar nginx: se habría seguido
+    # sirviendo el certificado viejo. La renovación la hace el cron con
+    # scripts/renew_certs.sh, que sí recarga.
+    profiles: ["tools"]
+    networks:
+      - odoo_net
 
 volumes:
   odoo-data:

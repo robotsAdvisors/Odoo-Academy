@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <function model="ir.config_parameter" name="set_param" eval="('web.base.url', 'https://cursos.robotsconsultant.net')"/>
-    <function model="ir.config_parameter" name="set_param" eval="('web.base.url.freeze', 'True')"/>
 
     <!-- ──────────────────────────────────────────
          Producto: Curso Fundador Digital
@@ -14,7 +12,58 @@
         <field name="sale_ok">True</field>
         <field name="purchase_ok">False</field>
         <field name="invoice_policy">order</field>
+        <field name="base_unit_count">1</field>
         <field name="description_sale">Acceso completo al curso Fundador Digital: digitaliza tu negocio con Odoo.</field>
+    </record>
+
+    <!-- ──────────────────────────────────────────
+         Productos: un curso, un producto
+         Se conserva ACADEMY-FUNDADOR-DIGITAL por compatibilidad
+         con pedidos ya existentes; los nuevos usan estos dos.
+    ────────────────────────────────────────── -->
+    <record id="product_academy_ecommerce" model="product.template">
+        <field name="name">Curso eCommerce - Acceso al curso</field>
+        <field name="default_code">ACADEMY-ECOMMERCE</field>
+        <field name="type">service</field>
+        <field name="list_price">22.0</field>
+        <field name="sale_ok">True</field>
+        <field name="purchase_ok">False</field>
+        <field name="invoice_policy">order</field>
+        <field name="base_unit_count">1</field>
+        <field name="description_sale">Centraliza pedidos, inventario, facturacion y clientes de tu tienda online con Odoo.</field>
+    </record>
+
+    <record id="product_academy_hosteleria" model="product.template">
+        <field name="name">Curso Hosteleria - Acceso al curso</field>
+        <field name="default_code">ACADEMY-HOSTELERIA</field>
+        <field name="type">service</field>
+        <field name="list_price">22.0</field>
+        <field name="sale_ok">True</field>
+        <field name="purchase_ok">False</field>
+        <field name="invoice_policy">order</field>
+        <field name="base_unit_count">1</field>
+        <field name="description_sale">Reservas, fidelizacion y datos de clientes centralizados para restaurantes y cafeterias.</field>
+    </record>
+
+    <!-- ──────────────────────────────────────────
+         Canales de eLearning: uno por curso.
+         visibility=members -> solo lo ven los inscritos.
+         enroll=invite      -> la inscripcion la hace el hook tras el pago.
+    ────────────────────────────────────────── -->
+    <record id="channel_academy_ecommerce" model="slide.channel">
+        <field name="name">Curso eCommerce</field>
+        <field name="description">Digitaliza tu tienda online con Odoo.</field>
+        <field name="enroll">invite</field>
+        <field name="visibility">members</field>
+        <field name="is_published" eval="True"/>
+    </record>
+
+    <record id="channel_academy_hosteleria" model="slide.channel">
+        <field name="name">Curso Hosteleria</field>
+        <field name="description">Digitaliza tu restaurante o cafeteria con Odoo.</field>
+        <field name="enroll">invite</field>
+        <field name="visibility">members</field>
+        <field name="is_published" eval="True"/>
     </record>
 
     <!-- ──────────────────────────────────────────
@@ -26,7 +75,7 @@
         <field name="subject">¡Tu acceso al curso Fundador Digital está listo!</field>
         <field name="email_from">{{ (object.company_id.email or user.email) | safe }}</field>
         <field name="email_to">{{ object.email | safe }}</field>
-        <field name="body_html" type="html">
+        <field name="body_html">
 <![CDATA[
 <div style="font-family: 'IBM Plex Sans', Arial, sans-serif; max-width: 600px; margin: auto; background: #f6f4ef; padding: 32px; border-radius: 12px;">
   <div style="background: #0f766e; border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 24px;">

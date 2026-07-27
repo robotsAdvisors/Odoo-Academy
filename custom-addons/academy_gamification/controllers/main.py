@@ -9,6 +9,21 @@ import re
 _logger = logging.getLogger(__name__)
 
 
+# Cada curso: su producto y su canal de eLearning.
+# La clave es el valor que viaja en ?curso= desde las landings.
+ACADEMY_COURSES = {
+    "ecommerce": {
+        "product_code": "ACADEMY-ECOMMERCE",
+        "channel_xmlid": "academy_gamification.channel_academy_ecommerce",
+        "label": "Curso eCommerce",
+    },
+    "hosteleria": {
+        "product_code": "ACADEMY-HOSTELERIA",
+        "channel_xmlid": "academy_gamification.channel_academy_hosteleria",
+        "label": "Curso Hosteleria",
+    },
+}
+
 LINKEDIN_POSTS_PARAM = "academy_gamification.linkedin_posts"
 DEFAULT_LINKEDIN_POSTS = [
     "https://www.linkedin.com/posts/robotsconsultant_industria40-digitalizaciaejn-ayudasempresas-activity-7480508112672624640-f4kg",
@@ -19,6 +34,14 @@ DEFAULT_LINKEDIN_POSTS = [
 
 
 class AcademyDecisionController(http.Controller):
+
+    def _redirect_public_user_to_login(self):
+        if not request.env.user._is_public():
+            return None
+        target = request.httprequest.path
+        if request.httprequest.query_string:
+            target = f"{target}?{request.httprequest.query_string.decode('utf-8')}"
+        return request.redirect(f"/web/login?redirect={target}")
 
     def _json_response(self, payload, status=200):
         body = json.dumps(payload, ensure_ascii=True)
@@ -89,14 +112,29 @@ class AcademyDecisionController(http.Controller):
 
     @http.route(["/"], type="http", auth="public", website=True, sitemap=True)
     def website_home_landing(self, **kwargs):
-        return request.render("academy_gamification.digitaliza_tu_negocio_landing")
+        return request.render("academy_gamification.courses_selector_landing")
 
     @http.route([
         "/academy/digitaliza-tu-negocio",
+        "/academy/cursos",
         "/odoo/academy/digitaliza-tu-negocio",
     ], type="http", auth="public", website=True)
     def digitaliza_tu_negocio_landing(self, **kwargs):
-        return request.render("academy_gamification.digitaliza_tu_negocio_landing")
+        return request.render("academy_gamification.courses_selector_landing")
+
+    @http.route([
+        "/curso-ecommerce",
+        "/academy/curso-ecommerce",
+    ], type="http", auth="public", website=True, sitemap=True)
+    def ecommerce_course_landing(self, **kwargs):
+        return request.render("academy_gamification.ecommerce_course_landing")
+
+    @http.route([
+        "/curso-hosteleria",
+        "/academy/curso-hosteleria",
+    ], type="http", auth="public", website=True, sitemap=True)
+    def hosteleria_course_landing(self, **kwargs):
+        return request.render("academy_gamification.hosteleria_course_landing")
 
     @http.route([
         "/servicios",
@@ -309,22 +347,35 @@ class AcademyDecisionController(http.Controller):
         ]
         return request.make_response(pdf_content, headers=headers)
 
+
     # ──────────────────────────────────────────────────────────────────
     #  Inscripción + pago directo con Stripe
     # ──────────────────────────────────────────────────────────────────
 
     @http.route('/academy/inscripcion', type='http', auth='public', website=True, methods=['GET'])
-    def academy_inscripcion_form(self, **kwargs):
+    def academy_inscripcion_form(self, curso=None, **kwargs):
         """Muestra el formulario de captura de nombre y email antes del pago."""
-        return request.render('academy_gamification.academy_inscripcion_form')
+        if curso not in ACADEMY_COURSES:
+            # Sin curso valido no se puede construir el pedido: se manda al
+            # selector para que elija uno en vez de vender algo por defecto.
+            return request.redirect('/')
+        return request.render(
+            'academy_gamification.academy_inscripcion_form',
+            {'curso': curso, 'curso_label': ACADEMY_COURSES[curso]['label']},
+        )
 
     @http.route('/academy/inscripcion', type='http', auth='public', website=True, methods=['POST'], csrf=True)
-    def academy_inscripcion_submit(self, nombre='', email='', **kwargs):
+    def academy_inscripcion_submit(self, nombre='', email='', curso=None, **kwargs):
         """Crea partner + orden de venta y redirige a la página de pago del portal."""
         nombre = (nombre or '').strip()
         email = (email or '').strip().lower()
 
-        error_vals = {'nombre': nombre, 'email': email}
+        error_vals = {'nombre': nombre, 'email': email, 'curso': curso}
+
+        if curso not in ACADEMY_COURSES:
+            return request.redirect('/')
+        course = ACADEMY_COURSES[curso]
+        error_vals['curso_label'] = course['label']
 
         if not nombre or not email:
             return request.render(
@@ -353,10 +404,12 @@ class AcademyDecisionController(http.Controller):
 
         # ── Producto ─────────────────────────────────────────────────
         product = env['product.product'].sudo().search(
-            [('default_code', '=', 'ACADEMY-FUNDADOR-DIGITAL')], limit=1
+            [('default_code', '=', course['product_code'])], limit=1
         )
         if not product:
-            _logger.error('Academy checkout: product ACADEMY-FUNDADOR-DIGITAL not found.')
+            _logger.error(
+                'Academy checkout: product %s not found.', course['product_code']
+            )
             return request.render(
                 'academy_gamification.academy_inscripcion_form',
                 {**error_vals, 'error': 'Error interno. Por favor contacta con soporte.'},
@@ -370,7 +423,7 @@ class AcademyDecisionController(http.Controller):
                 'product_id': product.id,
                 'name': product.name,
                 'product_uom_qty': 1.0,
-                'price_unit': 22.0,
+                'price_unit': product.list_price,
             })],
         })
         order._portal_ensure_token()

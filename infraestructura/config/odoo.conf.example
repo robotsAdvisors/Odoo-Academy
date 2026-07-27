@@ -1,0 +1,56 @@
+[options]
+; =============================================================
+; Plantilla. En el servidor se copia a odoo.conf (que está en
+; .gitignore) y se rellenan los secretos.
+;
+; Genera la contraseña con:  openssl rand -base64 30
+; =============================================================
+admin_passwd = CAMBIAME_password_larga_y_aleatoria
+
+db_host = db
+db_port = 5432
+; Deben coincidir con el ROL que ya existe en el cluster de Postgres.
+; POSTGRES_PASSWORD del .env solo se aplica al CREAR el cluster: en una
+; instalación ya existente, cambiarlo aquí rompe la conexión de Odoo.
+; Para rotarla de verdad hace falta un ALTER ROLE en la base de datos.
+db_user = odoo
+db_password = CAMBIAME_debe_coincidir_con_POSTGRES_PASSWORD
+db_maxconn = 64
+
+addons_path = /usr/lib/python3/dist-packages/odoo/addons,/mnt/extra-addons
+data_dir = /var/lib/odoo
+
+; --- Proxy inverso -------------------------------------------
+; Necesario para que Odoo respete X-Forwarded-Proto/Host de nginx.
+; Por sí solo NO basta: nginx tiene que ENVIAR esas cabeceras
+; (proxy_set_header en nginx/default.conf) o Odoo seguirá viendo
+; "Host: odoo:8069" y escribirá web.base.url con el hostname interno.
+proxy_mode = True
+
+; --- Seguridad -----------------------------------------------
+; Oculta /web/database/manager (creación/borrado/duplicado de BD)
+list_db = False
+; Si algún día alojas varias BD, descomenta y ajusta al nombre real:
+; dbfilter = ^odoo$
+
+; --- Workers -------------------------------------------------
+; OBLIGATORIO > 0: el puerto gevent 8072 (websocket/chat) solo se
+; levanta en modo multiproceso. Con workers = 0 nginx da 502 en /websocket.
+; Dimensionado para 2 vCPU / 4 GB. Con más CPU: (nº vCPU * 2) + 1,
+; vigilando que workers * limit_memory_hard quepa en la RAM.
+workers = 2
+max_cron_threads = 1
+
+; --- Límites -------------------------------------------------
+limit_time_cpu = 600
+limit_time_real = 1200
+; Los cron largos necesitan más margen que una petición web
+limit_time_real_cron = 1800
+limit_request = 8192
+; 900 MB / 1100 MB por worker → ~2,2 GB con workers = 2
+limit_memory_soft = 943718400
+limit_memory_hard = 1153433600
+
+; --- Logs ----------------------------------------------------
+log_level = info
+logfile = None

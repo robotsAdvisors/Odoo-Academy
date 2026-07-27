@@ -188,14 +188,13 @@
                         <div class="row g-4 align-items-center">
                             <div class="col-lg-7">
                                 <div class="academy-hero-panel">
-                                    <h1 class="hero-title">Digitaliza tu negocio y deja de perder tiempo con tareas manuales</h1>
+                                    <h1 class="hero-title">Digitaliza tu negocio y deja de perder tiempo en tareas manuales</h1>
                                     <p class="hero-sub mt-3 mb-4">
-                                        Descubre como gestionar ventas, clientes, pedidos, facturacion y marketing utilizando Odoo,
-                                        automatizacion e Inteligencia Artificial.
+                                        Aprende a gestionar ventas, clientes, pedidos, facturacion y marketing en un solo lugar,
+                                        combinando Odoo, automatizacion e Inteligencia Artificial.
                                     </p>
-
                                     <div class="mb-4">
-                                        <span class="academy-chip">Duenos de tiendas online (Shopify, WooCommerce, PrestaShop)</span>
+                                        <span class="academy-chip">Duenos de tiendas con presencia online (Shopify, WooCommerce, PrestaShop)</span>
                                         <span class="academy-chip">Restaurantes, cafeterias y hosteleria</span>
                                         <span class="academy-chip">Curso practico + plantillas</span>
                                     </div>
@@ -229,23 +228,23 @@
                         <div class="row g-4">
                             <div class="col-lg-6">
                                 <div class="academy-card">
-                                    <h3 class="h5 mb-3">Si tienes una tienda online</h3>
+                                    <h3 class="h5 mb-3">Si tienes una tienda y sientes que...</h3>
                                     <ul class="academy-list">
                                         <li>Los pedidos estan en una plataforma y la facturacion en otra.</li>
                                         <li>No sabes que productos son realmente rentables.</li>
-                                        <li>Pierdes tiempo actualizando inventario.</li>
-                                        <li>La informacion de clientes esta dispersa.</li>
+                                        <li>Pierdes tiempo actualizando inventario cada semana.</li>
+                                        <li>La informacion de clientes esta dispersa: en libretas, en WhatsApp y en mil sitios mas.</li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="academy-card">
-                                    <h3 class="h5 mb-3">Si tienes un restaurante o cafeteria</h3>
+                                    <h3 class="h5 mb-3">Si tienes un restaurante o cafeteria...</h3>
                                     <ul class="academy-list">
-                                        <li>Gestionas reservas por WhatsApp.</li>
-                                        <li>No tienes centralizados los datos de clientes.</li>
+                                        <li>Gestionas reservas por WhatsApp y no de forma centralizada.</li>
+                                        <li>No tienes centralizados los datos de clientes: estan en libretas, en WhatsApp y en distintos canales.</li>
                                         <li>El marketing depende de publicaciones manuales.</li>
-                                        <li>No sabes que procesos puedes automatizar.</li>
+                                        <li>No sabes que procesos puedes automatizar ni como mejorar la experiencia de tu negocio.</li>
                                     </ul>
                                 </div>
                             </div>
@@ -390,11 +389,336 @@
                                 <li>Bonus incluidos</li>
                             </ul>
                             <p class="h4 mb-3">Solo 22 EUR</p>
-                            <a href="/academy/fundador-digital" class="academy-btn">QUIERO ACCEDER AHORA</a>
+                            <a href="/academy/inscripcion" class="academy-btn">QUIERO ACCEDER AHORA</a>
                         </div>
                     </div>
                 </div>
 
+            </section>
+        </t>
+    </template>
+
+    <template id="courses_selector_landing" name="Selector Cursos">
+        <t t-call="website.layout">
+            <section class="academy-selector">
+                <style>
+                    .academy-selector {
+                        background:
+                            radial-gradient(860px 400px at 12% -8%, rgba(121, 211, 255, 0.30), rgba(121, 211, 255, 0) 55%),
+                            radial-gradient(760px 420px at 88% 0%, rgba(255, 212, 122, 0.32), rgba(255, 212, 122, 0) 52%),
+                            linear-gradient(180deg, #f4f8ff 0%, #f6faf7 100%);
+                        padding: 4.5rem 0;
+                    }
+
+                    .academy-selector a {
+                        text-decoration: none;
+                        color: #3a47df;
+                    }
+
+                    .academy-selector tr th,
+                    .academy-selector tr td {
+                        border: 1px solid #e6e6e6;
+                    }
+
+                    .academy-selector tr th {
+                        background-color: #f5f5f5;
+                    }
+
+                    .academy-kicker {
+                        display: inline-block;
+                        background: #ffffff;
+                        border: 1px solid #dbe3ff;
+                        color: #2c3bb8;
+                        border-radius: 999px;
+                        padding: 0.4rem 0.9rem;
+                        font-size: 0.9rem;
+                        font-weight: 700;
+                        box-shadow: 0 8px 24px rgba(17, 24, 39, 0.06);
+                    }
+
+                    .academy-hero-box {
+                        background: rgba(255, 255, 255, 0.86);
+                        border: 1px solid #dde7f4;
+                        border-radius: 1.25rem;
+                        padding: 2rem;
+                        box-shadow: 0 18px 45px rgba(12, 34, 66, 0.08);
+                    }
+
+                    .academy-title {
+                        font-weight: 900;
+                        letter-spacing: -0.02em;
+                        font-size: clamp(2rem, 4vw, 3rem);
+                    }
+
+                    .academy-card {
+                        border: 0;
+                        border-radius: 1.1rem;
+                        overflow: hidden;
+                        background: #ffffff;
+                        box-shadow: 0 18px 38px rgba(17, 24, 39, 0.11);
+                        height: 100%;
+                    }
+
+                    .academy-card-image {
+                        width: 100%;
+                        height: 210px;
+                        object-fit: cover;
+                    }
+
+                    .academy-badge {
+                        display: inline-block;
+                        background: #eef2ff;
+                        color: #2a3aa8;
+                        border-radius: 999px;
+                        font-size: 0.8rem;
+                        font-weight: 700;
+                        padding: 0.35rem 0.7rem;
+                        margin-right: 0.4rem;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .academy-checks {
+                        list-style: none;
+                        padding-left: 0;
+                        margin-bottom: 1.4rem;
+                    }
+
+                    .academy-checks li {
+                        margin-bottom: 0.45rem;
+                    }
+
+                    .academy-checks li::before {
+                        content: "✅ ";
+                    }
+
+                    .academy-story {
+                        background: #ffffff;
+                        border-radius: 1.1rem;
+                        border: 1px solid #dde6f1;
+                        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+                    }
+
+                    .academy-story-img {
+                        width: 100%;
+                        height: 250px;
+                        object-fit: cover;
+                        border-radius: 0.9rem;
+                    }
+
+                    .academy-cta {
+                        border: 0;
+                        border-radius: 1rem;
+                        background: linear-gradient(135deg, #111827 0%, #0b5a53 100%);
+                        color: #ffffff;
+                        box-shadow: 0 22px 45px rgba(10, 33, 54, 0.30);
+                    }
+
+                    .academy-cta .btn-light {
+                        border-radius: 0.75rem;
+                        font-weight: 700;
+                        color: #0f172a;
+                    }
+
+                    .academy-btn-modern {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.5rem;
+                        min-height: 58px;
+                        padding: 0.95rem 1.5rem;
+                        border-radius: 0.95rem;
+                        border: 0;
+                        font-size: 1rem;
+                        font-weight: 800;
+                        letter-spacing: 0.01em;
+                        transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+                    }
+
+                    .academy-btn-primary {
+                        color: #ffffff !important;
+                        background: linear-gradient(135deg, #4158d0 0%, #3a47df 45%, #2542b8 100%);
+                        box-shadow: 0 14px 34px rgba(56, 76, 210, 0.38);
+                    }
+
+                    .academy-btn-primary:hover {
+                        color: #ffffff !important;
+                        transform: translateY(-2px) scale(1.01);
+                        box-shadow: 0 18px 40px rgba(56, 76, 210, 0.48);
+                        filter: saturate(1.08);
+                    }
+
+                    .academy-btn-cta {
+                        color: #0f172a !important;
+                        background: linear-gradient(135deg, #ffffff 0%, #f5fbff 100%);
+                        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28);
+                    }
+
+                    .academy-btn-cta:hover {
+                        color: #0f172a !important;
+                        transform: translateY(-2px) scale(1.01);
+                        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.34);
+                    }
+
+                    @media (max-width: 991.98px) {
+                        .academy-hero-box {
+                            padding: 1.4rem;
+                        }
+
+                        .academy-card-image {
+                            height: 170px;
+                        }
+
+                        .academy-btn-modern {
+                            width: 100%;
+                            min-height: 54px;
+                        }
+                    }
+                </style>
+
+                <div class="container">
+                    <div class="mx-auto" style="max-width:1120px;">
+                        <div class="academy-hero-box mb-4">
+                            <span class="academy-kicker">🚀 Transformacion Digital Real</span>
+                            <h1 class="academy-title mt-3 mb-3">Haz que tu negocio trabaje para ti, no al reves</h1>
+                            <p class="lead mb-2">Cada dia miles de emprendedores pierden horas buscando pedidos, respondiendo mensajes, revisando stock o intentando entender que ocurre realmente en su negocio.</p>
+                            <p class="lead mb-2">No necesitas trabajar mas.</p>
+                            <p class="lead mb-2">Necesitas mejores procesos.</p>
+                            <p class="lead text-muted mb-3">Descubre como utilizar Odoo, automatizacion e Inteligencia Artificial para recuperar tiempo, mejorar la experiencia de tus clientes y hacer crecer tu negocio de forma mas inteligente.</p>
+                            <p class="fw-bold mb-0">🎯 Elige el programa disenado para tu sector.</p>
+                        </div>
+
+                        <div class="row g-4 mb-5" id="cursos">
+                            <div class="col-lg-6">
+                                <div class="academy-card">
+                                    <img class="academy-card-image" src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Gestion de ecommerce"/>
+                                    <div class="card-body p-4">
+                                        <span class="academy-badge">🛒 eCommerce</span>
+                                        <span class="academy-badge">⚙️ Procesos</span>
+                                        <h2 class="h4 mt-2 mb-3">Curso eCommerce</h2>
+                                        <h3 class="h5 mb-3" style="font-weight:700;">Deja de apagar fuegos y vuelve a hacer crecer tu tienda online</h3>
+                                        <p class="mb-3">Tu negocio deberia ayudarte a ganar libertad, no convertirse en otro empleo.</p>
+                                        <p class="text-muted mb-3">Aprende a centralizar pedidos, inventario, facturacion y clientes para tener el control que necesitas para crecer.</p>
+                                        <h4 class="h6 mb-2">💡 Imagina poder...</h4>
+                                        <ul class="academy-checks">
+                                            <li>Saber exactamente que productos generan mas beneficios.</li>
+                                            <li>Tener el stock actualizado sin hojas Excel.</li>
+                                            <li>Gestionar pedidos sin errores ni duplicidades.</li>
+                                            <li>Ahorrar horas cada semana en tareas repetitivas.</li>
+                                            <li>Tomar decisiones con datos y no con intuicion.</li>
+                                        </ul>
+                                        <a href="/curso-ecommerce" class="academy-btn-modern academy-btn-primary">⚡ Quiero digitalizar mi eCommerce</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="academy-card">
+                                    <img class="academy-card-image" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=1400&amp;q=80" alt="Gestion de hosteleria"/>
+                                    <div class="card-body p-4">
+                                        <span class="academy-badge">☕ Hosteleria</span>
+                                        <span class="academy-badge">⭐ Fidelizacion</span>
+                                        <h2 class="h4 mt-2 mb-3">Curso Hosteleria</h2>
+                                        <h3 class="h5 mb-3" style="font-weight:700;">Consigue que tus clientes vuelvan una y otra vez</h3>
+                                        <p class="mb-3">El exito de un restaurante o cafeteria no depende solo de servir un buen producto.</p>
+                                        <p class="text-muted mb-3">Depende de la experiencia que vive cada cliente.</p>
+                                        <p class="text-muted mb-3">Aprende como utilizar la tecnologia para mejorar la atencion, aumentar las resenas positivas y convertir clientes ocasionales en clientes fieles.</p>
+                                        <h4 class="h6 mb-2">💡 Imagina poder...</h4>
+                                        <ul class="academy-checks">
+                                            <li>Gestionar reservas y clientes desde un unico lugar.</li>
+                                            <li>Crear programas de fidelizacion que generen visitas recurrentes.</li>
+                                            <li>Conseguir mas resenas en Google.</li>
+                                            <li>Conocer mejor a tus clientes habituales.</li>
+                                            <li>Dedicar menos tiempo a la gestion y mas tiempo a hacer crecer el negocio.</li>
+                                        </ul>
+                                        <a href="/curso-hosteleria" class="academy-btn-modern academy-btn-primary">🔥 Quiero mejorar mi restaurante</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="academy-story mb-4">
+                            <div class="row g-0 align-items-center">
+                                <div class="col-lg-5 p-3 p-lg-4">
+                                    <img class="academy-story-img" src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Equipo de negocio en planificacion"/>
+                                </div>
+                                <div class="col-lg-7 p-4 p-lg-5">
+                                    <h2 class="h3 mb-3" style="font-weight:800;">🧠 La tecnologia no deberia complicarte la vida</h2>
+                                    <p class="mb-2">Muchos pequenos negocios sienten que trabajan mas que nunca.</p>
+                                    <p class="mb-0">Mas aplicaciones.</p>
+                                    <p class="mb-0">Mas mensajes.</p>
+                                    <p class="mb-0">Mas tareas.</p>
+                                    <p class="mb-3">Mas estres.</p>
+                                    <p class="mb-2">Estos cursos han sido creados para ayudarte a simplificar.</p>
+                                    <p class="mb-0">Porque el objetivo no es aprender software.</p>
+                                    <p class="mb-0">El objetivo es recuperar tiempo, tener mas control y construir un negocio que funcione incluso cuando no estas pendiente de cada detalle.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="academy-cta card">
+                            <div class="card-body p-4 p-lg-5 text-center">
+                                <h2 class="h3 mb-3" style="font-weight:800;">📈 Tu negocio puede crecer sin aumentar el caos</h2>
+                                <p class="mb-3">Empieza hoy a construir procesos mas simples, clientes mas fieles y una empresa preparada para el futuro.</p>
+                                <p class="mb-4 fw-semibold">Elige tu programa y comienza tu transformacion digital por solo 22 EUR.</p>
+                                <a href="#cursos" class="academy-btn-modern academy-btn-cta">👉 Quiero empezar ahora</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </template>
+
+    <template id="ecommerce_course_landing" name="Landing Curso eCommerce">
+        <t t-call="website.layout">
+            <section style="background:#f8fafc;padding:4rem 0;">
+                <div class="container" style="max-width:1080px;">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-7">
+                            <h1 class="mb-3" style="font-weight:800;">Curso de Digitalizacion para eCommerce</h1>
+                            <p class="lead text-muted mb-3">Aprende a conectar pedidos, catalogo, inventario y facturacion en una sola operacion con Odoo.</p>
+                            <ul class="mb-4">
+                                <li>Sincronizacion de productos y variantes</li>
+                                <li>Flujo de pedido desde web hasta entrega</li>
+                                <li>Control de margenes y productos mas rentables</li>
+                            </ul>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="/academy/inscripcion?curso=ecommerce" class="btn btn-primary">Quiero este curso</a>
+                                <a href="/academy/cursos" class="btn btn-outline-secondary">Ver ambos cursos</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Curso ecommerce" class="img-fluid rounded-4 shadow-sm"/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </t>
+    </template>
+
+    <template id="hosteleria_course_landing" name="Landing Curso Hosteleria">
+        <t t-call="website.layout">
+            <section style="background:#f8fafc;padding:4rem 0;">
+                <div class="container" style="max-width:1080px;">
+                    <div class="row g-4 align-items-center">
+                        <div class="col-lg-7">
+                            <h1 class="mb-3" style="font-weight:800;">Curso de Digitalizacion para Hosteleria</h1>
+                            <p class="lead text-muted mb-3">Implementa una gestion moderna para restaurante o cafeteria: clientes, reservas, ventas y fidelizacion.</p>
+                            <ul class="mb-4">
+                                <li>Base de datos unica de clientes</li>
+                                <li>Automatizacion de recordatorios y promociones</li>
+                                <li>Reportes para decidir con datos reales</li>
+                            </ul>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="/academy/inscripcion?curso=hosteleria" class="btn btn-primary">Quiero este curso</a>
+                                <a href="/academy/cursos" class="btn btn-outline-secondary">Ver ambos cursos</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-5">
+                            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Curso hosteleria" class="img-fluid rounded-4 shadow-sm"/>
+                        </div>
+                    </div>
+                </div>
             </section>
         </t>
     </template>
@@ -417,7 +741,12 @@
                 <b>Enlaces</b><br/>
                 <a href="/">Inicio</a><br/>
                 <a href="/our-services">Servicios</a><br/>
-                <a href="/academy/digitaliza-tu-negocio">Curso de Digitalizacion</a><br/>
+                <t t-if="not request.env.user._is_public()">
+                    <a href="/academy/cursos">Cursos de Digitalizacion</a><br/>
+                </t>
+                <t t-else="">
+                    <a href="/web/login?redirect=/academy/cursos">Acceso alumnos</a><br/>
+                </t>
                 <a href="/news">Blog</a><br/>
                 <a href="#">Contacto</a>
             </p>
@@ -426,7 +755,7 @@
         <xpath expr="//section[hasclass('s_text_block')]//ul[hasclass('list-unstyled') and hasclass('mb-2')]" position="replace">
             <ul class="list-unstyled mb-2">
                 <li><i class="fa fa-envelope fa-fw me-2"/><span><a href="mailto:contacto@robotsconsultant.com">contacto@robotsconsultant.com</a></span></li>
-                <li><i class="fa fa-phone fa-fw me-2"/><span class="o_force_ltr"><a href="tel:+34641526150">+34 641526150</a></span></li>
+                <li><i class="fa fa-phone fa-fw me-2"/><span class="o_force_ltr"><a href="tel:+34XXXXXXXXX">+34 XXX XXX XXX</a></span></li>
                 <li><i class="fa fa-map-marker fa-fw me-2"/><span>Madrid, Espana</span></li>
                 <li><i class="fa fa-globe fa-fw me-2"/><span><a href="https://www.robotsconsultant.com" target="_blank">www.robotsconsultant.com</a></span></li>
             </ul>
@@ -438,32 +767,60 @@
             <t t-set="head">
                 <style>
                     .servicios-landing {
-                        --srv-bg: #f8fafc;
+                        --srv-bg: #f4f8ff;
                         --srv-surface: #ffffff;
                         --srv-border: #dbe2ea;
                         --srv-accent: #f59e0b;
-                        background: var(--srv-bg);
-                        padding: 3rem 0 4rem;
+                        --srv-primary: #3148d8;
+                        --srv-dark: #0f172a;
+                        background:
+                            radial-gradient(780px 400px at 8% -8%, rgba(67, 192, 255, 0.30), rgba(67, 192, 255, 0) 55%),
+                            radial-gradient(820px 380px at 92% 0%, rgba(255, 217, 140, 0.30), rgba(255, 217, 140, 0) 52%),
+                            var(--srv-bg);
+                        padding: 4rem 0 4.5rem;
                     }
 
                     .servicios-wrap {
-                        max-width: 1080px;
+                        max-width: 1140px;
                         margin: 0 auto;
                         padding: 0 1rem;
+                    }
+
+                    .servicios-hero {
+                        background: rgba(255, 255, 255, 0.88);
+                        border: 1px solid var(--srv-border);
+                        border-radius: 1.25rem;
+                        padding: 1.8rem;
+                        box-shadow: 0 20px 46px rgba(15, 23, 42, 0.09);
+                        margin-bottom: 1.4rem;
+                    }
+
+                    .servicios-kicker {
+                        display: inline-block;
+                        background: #eef2ff;
+                        border: 1px solid #d7e0ff;
+                        color: #2f3ea8;
+                        border-radius: 999px;
+                        padding: 0.4rem 0.85rem;
+                        font-size: 0.88rem;
+                        font-weight: 700;
+                        margin-bottom: 0.7rem;
                     }
 
                     .servicios-block {
                         background: var(--srv-surface);
                         border: 1px solid var(--srv-border);
-                        border-radius: 1rem;
-                        padding: 1.6rem;
+                        border-radius: 1.1rem;
+                        padding: 1.5rem;
                         margin-bottom: 1.3rem;
+                        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
                     }
 
                     .servicios-block h1 {
                         font-size: clamp(2rem, 4.6vw, 3.2rem);
                         line-height: 1.06;
                         margin-bottom: 1rem;
+                        letter-spacing: -0.02em;
                     }
 
                     .servicios-block h2 {
@@ -486,6 +843,35 @@
                         margin-bottom: 0.55rem;
                     }
 
+                    .servicios-points li::before {
+                        content: "✅ ";
+                    }
+
+                    .servicios-media {
+                        width: 100%;
+                        height: 220px;
+                        object-fit: cover;
+                        border-radius: 0.9rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    .servicios-grid-2 {
+                        display: grid;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 1rem;
+                    }
+
+                    .servicios-tag {
+                        display: inline-block;
+                        margin: 0 0.4rem 0.5rem 0;
+                        background: #eef2ff;
+                        color: #2d3ea8;
+                        border-radius: 999px;
+                        padding: 0.3rem 0.7rem;
+                        font-size: 0.8rem;
+                        font-weight: 700;
+                    }
+
                     .servicios-divider {
                         height: 1px;
                         background: linear-gradient(90deg, rgba(15, 23, 42, 0), rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 0));
@@ -493,25 +879,62 @@
                     }
 
                     .servicios-cta {
-                        display: inline-block;
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 0.45rem;
+                        min-height: 56px;
                         margin-top: 0.7rem;
-                        background: var(--srv-accent);
-                        color: #1f2937;
+                        background: linear-gradient(135deg, #f6b64c 0%, #f59e0b 100%);
+                        color: #1f2937 !important;
                         text-decoration: none;
-                        border-radius: 0.75rem;
-                        padding: 0.85rem 1.25rem;
-                        font-weight: 700;
-                        box-shadow: 0 10px 24px rgba(245, 158, 11, 0.34);
+                        border-radius: 0.9rem;
+                        padding: 0.9rem 1.4rem;
+                        font-weight: 800;
+                        box-shadow: 0 14px 32px rgba(245, 158, 11, 0.35);
+                        transition: transform 0.2s ease, box-shadow 0.2s ease;
                     }
 
                     .servicios-cta:hover {
-                        color: #1f2937;
-                        transform: translateY(-1px);
+                        color: #1f2937 !important;
+                        transform: translateY(-2px) scale(1.01);
+                        box-shadow: 0 18px 38px rgba(245, 158, 11, 0.44);
+                    }
+
+                    .servicios-cta-dark {
+                        background: linear-gradient(135deg, #1e293b 0%, #0f766e 100%);
+                        color: #ffffff !important;
+                        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.34);
+                    }
+
+                    .servicios-cta-dark:hover {
+                        color: #ffffff !important;
+                        box-shadow: 0 22px 44px rgba(15, 23, 42, 0.42);
+                    }
+
+                    .servicios-final {
+                        background: linear-gradient(135deg, #111827 0%, #0d5a56 100%);
+                        color: #ffffff;
+                        border-radius: 1.2rem;
+                        padding: 1.8rem;
+                        box-shadow: 0 22px 44px rgba(15, 23, 42, 0.34);
                     }
 
                     @media (max-width: 767.98px) {
                         .servicios-block {
                             padding: 1.3rem;
+                        }
+
+                        .servicios-grid-2 {
+                            grid-template-columns: 1fr;
+                        }
+
+                        .servicios-media {
+                            height: 170px;
+                        }
+
+                        .servicios-cta {
+                            width: 100%;
                         }
                     }
                 </style>
@@ -519,81 +942,112 @@
 
             <section class="servicios-landing">
                 <div class="servicios-wrap">
-                    <div class="servicios-block">
+                    <div class="servicios-hero">
+                        <span class="servicios-kicker">🚀 Servicios de Transformacion Empresarial</span>
                         <h1>Tu empresa sigue gestionando clientes, presupuestos y facturas con Excel?</h1>
-                        <p>Ayudo a pymes a digitalizar sus procesos mediante Odoo, automatizaciones e inteligencia artificial.</p>
-                        <ul class="servicios-points">
-                            <li>✅ Diagnostico gratuito de 30 minutos</li>
-                            <li>✅ Identificacion de oportunidades de ahorro</li>
-                            <li>✅ Plan de mejora personalizado</li>
-                        </ul>
-                        <a class="servicios-cta" href="https://calendly.com" target="_blank">Reservar auditoria gratuita</a>
+                        <p class="lead mb-2">Ayudo a pymes a digitalizar sus procesos mediante Odoo, automatizaciones e inteligencia artificial.</p>
+                        <span class="servicios-tag">⚙️ Odoo ERP</span>
+                        <span class="servicios-tag">🤖 Automatizaciones</span>
+                        <span class="servicios-tag">📈 Escalado</span>
+                    </div>
+
+                    <div class="servicios-block">
+                        <div class="servicios-grid-2 align-items-center">
+                            <div>
+                                <img class="servicios-media" src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Auditoria y consultoria empresarial"/>
+                            </div>
+                            <div>
+                                <h2>📋 Diagnostico express para detectar fugas de tiempo y dinero</h2>
+                                <p>En una llamada corta vemos donde se frena tu operacion y que puedes automatizar ya.</p>
+                                <ul class="servicios-points">
+                                    <li>Diagnostico gratuito de 30 minutos</li>
+                                    <li>Identificacion de oportunidades de ahorro</li>
+                                    <li>Plan de mejora personalizado</li>
+                                </ul>
+                                <a class="servicios-cta" href="https://calendly.com" target="_blank">🗓️ Reservar auditoria gratuita</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="servicios-divider"/>
 
                     <div class="servicios-block">
-                        <h2>Quizas te identificas con alguno de estos problemas</h2>
-                        <ul>
-                            <li>Los clientes estan repartidos entre WhatsApp, Excel y correo.</li>
-                            <li>Se pierden oportunidades por falta de seguimiento.</li>
-                            <li>Los presupuestos se hacen manualmente.</li>
-                            <li>La facturacion consume demasiado tiempo.</li>
-                            <li>La informacion esta duplicada en varios sistemas.</li>
-                            <li>No tienes visibilidad del estado real del negocio.</li>
-                        </ul>
-                        <p class="mb-0">Si has respondido "si" a alguno de ellos, probablemente puedas ahorrar tiempo y dinero mediante una mejor digitalizacion.</p>
+                        <h2>⚠️ Quizas te identificas con alguno de estos problemas</h2>
+                        <div class="servicios-grid-2">
+                            <ul class="servicios-points mb-0">
+                                <li>Los clientes estan repartidos entre WhatsApp, Excel y correo.</li>
+                                <li>Se pierden oportunidades por falta de seguimiento.</li>
+                                <li>Los presupuestos se hacen manualmente.</li>
+                            </ul>
+                            <ul class="servicios-points mb-0">
+                                <li>La facturacion consume demasiado tiempo.</li>
+                                <li>La informacion esta duplicada en varios sistemas.</li>
+                                <li>No tienes visibilidad del estado real del negocio.</li>
+                            </ul>
+                        </div>
+                        <p class="mb-0 mt-3">Si has respondido "si" a alguno de ellos, probablemente puedas ahorrar tiempo y dinero mediante una mejor digitalizacion.</p>
                     </div>
 
                     <div class="servicios-divider"/>
 
                     <div class="servicios-block">
-                        <h2>En 30 minutos revisaremos</h2>
-                        <ul class="servicios-points">
-                            <li>✅ Como gestionas clientes y oportunidades.</li>
-                            <li>✅ Como generas presupuestos y facturas.</li>
-                            <li>✅ Que tareas son repetitivas.</li>
-                            <li>✅ Que procesos pueden automatizarse.</li>
-                            <li>✅ Si Odoo es una solucion adecuada para tu empresa.</li>
-                        </ul>
-                        <p class="mb-0">Al finalizar recibiras recomendaciones practicas para mejorar tus procesos.</p>
+                        <div class="servicios-grid-2 align-items-center">
+                            <div>
+                                <h2>🔍 En 30 minutos revisaremos</h2>
+                                <ul class="servicios-points">
+                                    <li>Como gestionas clientes y oportunidades.</li>
+                                    <li>Como generas presupuestos y facturas.</li>
+                                    <li>Que tareas son repetitivas.</li>
+                                    <li>Que procesos pueden automatizarse.</li>
+                                    <li>Si Odoo es una solucion adecuada para tu empresa.</li>
+                                </ul>
+                                <p class="mb-0">Al finalizar recibiras recomendaciones practicas para mejorar tus procesos.</p>
+                            </div>
+                            <div>
+                                <img class="servicios-media" src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Analisis de procesos y datos"/>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="servicios-divider"/>
 
                     <div class="servicios-block">
-                        <h2>Hola, soy Oscarina</h2>
+                        <h2>👋 Hola, soy Oscarina</h2>
                         <p>Soy consultora tecnologica y desarrolladora de software.</p>
                         <p class="mb-2">Ayudo a pequenas y medianas empresas a digitalizar procesos mediante:</p>
-                        <ul>
-                            <li>Odoo ERP</li>
-                            <li>Desarrollo de aplicaciones</li>
-                            <li>Automatizaciones con n8n y Make</li>
-                            <li>Inteligencia Artificial</li>
-                        </ul>
-                        <p class="mb-0">Mi objetivo es ayudarte a eliminar trabajo manual y mejorar la eficiencia de tu negocio.</p>
+                        <div class="servicios-grid-2">
+                            <ul class="servicios-points mb-0">
+                                <li>Odoo ERP</li>
+                                <li>Desarrollo de aplicaciones</li>
+                            </ul>
+                            <ul class="servicios-points mb-0">
+                                <li>Automatizaciones con n8n y Make</li>
+                                <li>Inteligencia Artificial</li>
+                            </ul>
+                        </div>
+                        <p class="mb-0 mt-3">Mi objetivo es ayudarte a eliminar trabajo manual y mejorar la eficiencia de tu negocio.</p>
                     </div>
 
                     <div class="servicios-divider"/>
 
                     <div class="servicios-block">
-                        <h2>Oferta fundadores</h2>
+                        <h2>🎯 Oferta fundadores</h2>
                         <p>Como estoy lanzando mi servicio de implantacion Odoo, busco 3 empresas para un programa piloto.</p>
                         <p class="mb-2">Estas empresas recibiran:</p>
                         <ul class="servicios-points">
-                            <li>✅ Auditoria personalizada</li>
-                            <li>✅ Implantacion simplificada</li>
-                            <li>✅ Precio especial de lanzamiento</li>
+                            <li>Auditoria personalizada</li>
+                            <li>Implantacion simplificada</li>
+                            <li>Precio especial de lanzamiento</li>
                         </ul>
                         <p class="mb-0">A cambio solo solicitare feedback y autorizacion para utilizar el caso como referencia.</p>
                     </div>
 
-                    <div class="servicios-block">
-                        <h2>Reserva tu auditoria gratuita</h2>
+                    <div class="servicios-final">
+                        <h2 class="h3 mb-3">✅ Reserva tu auditoria gratuita</h2>
                         <p class="mb-1"><strong>Duracion:</strong> 30 minutos</p>
                         <p class="mb-1"><strong>Modalidad:</strong> Online</p>
                         <p class="mb-3"><strong>Sin compromiso</strong></p>
-                        <a class="servicios-cta" href="https://calendly.com" target="_blank">Reservar reunion</a>
+                        <a class="servicios-cta servicios-cta-dark" href="https://calendly.com" target="_blank">🚀 Reservar reunion</a>
                         <p class="mt-3 mb-0">Puedes conectar directamente con Calendly o Microsoft Bookings.</p>
                     </div>
                 </div>
@@ -766,6 +1220,129 @@
                 })();
             </script>
         </t>
+    </template>
+
+    <template id="academy_slides_home_custom" inherit_id="website_slides.courses_home" priority="95">
+        <xpath expr="//div[@id='wrap']" position="inside">
+            <style>
+                a {
+                    text-decoration: none;
+                    color: #464feb;
+                }
+                tr th, tr td {
+                    border: 1px solid #e6e6e6;
+                }
+                tr th {
+                    background-color: #f5f5f5;
+                }
+
+                .academy-slides-hero {
+                    background:
+                        radial-gradient(760px 340px at 10% 0%, rgba(88, 160, 255, 0.30), rgba(88, 160, 255, 0) 58%),
+                        radial-gradient(700px 320px at 90% 8%, rgba(255, 204, 120, 0.30), rgba(255, 204, 120, 0) 54%),
+                        linear-gradient(140deg, #10233f 0%, #1f3f86 52%, #2f4bb9 100%);
+                    border-radius: 1.2rem;
+                    padding: 2rem;
+                    color: #ffffff;
+                    box-shadow: 0 18px 34px rgba(15, 23, 42, 0.34);
+                    margin: 0;
+                    max-width: 100%;
+                }
+
+                .academy-slides-banner {
+                    padding: 1.5rem 0 1rem;
+                    background: #f7f9ff;
+                }
+
+                .academy-slides-hero h1 {
+                    font-size: clamp(1.8rem, 4vw, 2.9rem);
+                    font-weight: 900;
+                    line-height: 1.08;
+                    letter-spacing: -0.02em;
+                    margin-bottom: 0.8rem;
+                }
+
+                .academy-slides-hero p {
+                    font-size: 1.08rem;
+                    color: rgba(255, 255, 255, 0.92);
+                    max-width: 860px;
+                    margin-bottom: 0.9rem;
+                }
+
+                .academy-slides-hero .academy-slides-price {
+                    display: inline-block;
+                    background: rgba(255, 255, 255, 0.16);
+                    border: 1px solid rgba(255, 255, 255, 0.22);
+                    border-radius: 0.8rem;
+                    padding: 0.65rem 0.9rem;
+                    font-weight: 700;
+                    margin-top: 0.4rem;
+                }
+
+                .academy-slides-hero .academy-slides-actions {
+                    margin-top: 1.1rem;
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.7rem;
+                }
+
+                .academy-slides-hero .academy-slides-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 52px;
+                    padding: 0.85rem 1.2rem;
+                    border-radius: 0.85rem;
+                    font-weight: 800;
+                    letter-spacing: 0.01em;
+                    text-decoration: none;
+                    transition: transform 0.2s ease, box-shadow 0.2s ease;
+                }
+
+                .academy-slides-hero .academy-slides-btn-primary {
+                    background: #ffffff;
+                    color: #182d69;
+                    box-shadow: 0 14px 30px rgba(255, 255, 255, 0.25);
+                }
+
+                .academy-slides-hero .academy-slides-btn-secondary {
+                    background: rgba(255, 255, 255, 0.16);
+                    color: #ffffff;
+                    border: 1px solid rgba(255, 255, 255, 0.28);
+                }
+
+                .academy-slides-hero .academy-slides-btn:hover {
+                    transform: translateY(-2px);
+                }
+
+                @media (max-width: 767.98px) {
+                    .academy-slides-hero {
+                        padding: 1.4rem;
+                        border-radius: 0.9rem;
+                    }
+
+                    .academy-slides-hero .academy-slides-btn {
+                        width: 100%;
+                    }
+                }
+            </style>
+        </xpath>
+
+        <xpath expr="//section[hasclass('s_banner')]" position="replace">
+            <section class="academy-slides-banner">
+                <div class="container">
+                    <div class="academy-slides-hero">
+                        <h1>Tu negocio puede crecer sin aumentar el caos</h1>
+                        <p>Empieza hoy a construir procesos mas simples, clientes mas fieles y una empresa preparada para el futuro.</p>
+                        <p class="academy-slides-price">Elige tu programa y comienza tu transformacion digital por solo 22 EUR.</p>
+                        <div class="academy-slides-actions">
+                            <a href="/academy/cursos" class="academy-slides-btn academy-slides-btn-primary">Ver programas</a>
+                            <a href="/academy/fundador-digital" class="academy-slides-btn academy-slides-btn-secondary">Ir a mi ruta guiada</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </xpath>
     </template>
 
 </odoo>
