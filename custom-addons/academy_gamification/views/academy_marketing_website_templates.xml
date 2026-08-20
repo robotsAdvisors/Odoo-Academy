@@ -698,26 +698,404 @@
 
     <template id="hosteleria_course_landing" name="Landing Curso Hosteleria">
         <t t-call="website.layout">
-            <section style="background:#f8fafc;padding:4rem 0;">
-                <div class="container" style="max-width:1080px;">
-                    <div class="row g-4 align-items-center">
-                        <div class="col-lg-7">
-                            <h1 class="mb-3" style="font-weight:800;">Curso de Digitalizacion para Hosteleria</h1>
-                            <p class="lead text-muted mb-3">Implementa una gestion moderna para restaurante o cafeteria: clientes, reservas, ventas y fidelizacion.</p>
-                            <ul class="mb-4">
-                                <li>Base de datos unica de clientes</li>
-                                <li>Automatizacion de recordatorios y promociones</li>
-                                <li>Reportes para decidir con datos reales</li>
-                            </ul>
-                            <div class="d-flex flex-wrap gap-2">
-                                <a href="/academy/inscripcion?curso=hosteleria" class="btn btn-primary">Quiero este curso</a>
-                                <a href="/academy/cursos" class="btn btn-outline-secondary">Ver ambos cursos</a>
+            <t t-set="head">
+                <link rel="preconnect" href="https://fonts.googleapis.com"/>
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+                <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+                <style>
+                    :root {
+                        --hostel-bg: #fdf6ee;
+                        --hostel-text: #1f1608;
+                        --hostel-muted: #6b5a45;
+                        --hostel-primary: #c2410c;
+                        --hostel-secondary: #7c2d12;
+                        --hostel-accent: #f59e0b;
+                        --hostel-card: #ffffff;
+                        --hostel-border: #ecdfcd;
+                    }
+
+                    .hostel-landing {
+                        background:
+                            radial-gradient(1100px 520px at 8% -10%, #fde68a 0%, rgba(253, 230, 138, 0) 55%),
+                            radial-gradient(780px 420px at 92% 2%, #fecaca 0%, rgba(254, 202, 202, 0) 45%),
+                            var(--hostel-bg);
+                        color: var(--hostel-text);
+                        font-family: 'IBM Plex Sans', sans-serif;
+                    }
+
+                    .hostel-landing .o_footer { display: none; }
+
+                    .hostel-landing h1, .hostel-landing h2, .hostel-landing h3, .hostel-landing h4 {
+                        font-family: 'Sora', sans-serif;
+                        letter-spacing: -0.02em;
+                    }
+
+                    .hostel-kicker {
+                        display: inline-block;
+                        background: #ffffff;
+                        border: 1px solid var(--hostel-border);
+                        color: var(--hostel-secondary);
+                        border-radius: 999px;
+                        padding: 0.4rem 0.9rem;
+                        font-size: 0.9rem;
+                        font-weight: 700;
+                        margin-bottom: 0.9rem;
+                    }
+
+                    .hostel-hero-title {
+                        font-size: clamp(2rem, 4.6vw, 3.4rem);
+                        line-height: 1.08;
+                        font-weight: 800;
+                    }
+
+                    .hostel-hero-sub {
+                        color: var(--hostel-muted);
+                        font-size: 1.12rem;
+                        max-width: 680px;
+                    }
+
+                    .hostel-hero-panel {
+                        background: rgba(255, 255, 255, 0.82);
+                        border: 1px solid var(--hostel-border);
+                        border-radius: 1.2rem;
+                        padding: 2rem;
+                        backdrop-filter: blur(2px);
+                    }
+
+                    .hostel-image-card {
+                        border-radius: 1rem;
+                        overflow: hidden;
+                        border: 1px solid var(--hostel-border);
+                        background: #fff;
+                        box-shadow: 0 12px 28px rgba(124, 45, 18, 0.1);
+                    }
+
+                    .hostel-image-card img {
+                        width: 100%;
+                        height: 230px;
+                        object-fit: cover;
+                        display: block;
+                    }
+
+                    .hostel-price-box {
+                        background: linear-gradient(135deg, var(--hostel-primary) 0%, var(--hostel-secondary) 100%);
+                        color: #fff;
+                        border-radius: 1.1rem;
+                        padding: 1.4rem;
+                        box-shadow: 0 18px 45px rgba(194, 65, 12, 0.28);
+                        max-width: 420px;
+                    }
+
+                    .hostel-btn {
+                        display: inline-block;
+                        background: var(--hostel-accent);
+                        color: #1f1608;
+                        font-weight: 700;
+                        border-radius: 0.7rem;
+                        padding: 0.85rem 1.3rem;
+                        text-decoration: none;
+                        transition: transform 0.2s ease, box-shadow 0.2s ease;
+                        box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+                    }
+
+                    .hostel-btn:hover {
+                        transform: translateY(-2px);
+                        color: #1f1608;
+                        box-shadow: 0 12px 30px rgba(245, 158, 11, 0.45);
+                    }
+
+                    .hostel-section { padding: 3.6rem 0; }
+
+                    .hostel-card {
+                        background: var(--hostel-card);
+                        border: 1px solid var(--hostel-border);
+                        border-radius: 1rem;
+                        padding: 1.3rem 1.3rem;
+                        height: 100%;
+                    }
+
+                    .hostel-muted { color: var(--hostel-muted); }
+
+                    .hostel-checks {
+                        list-style: none;
+                        padding-left: 0;
+                        margin-bottom: 0;
+                    }
+
+                    .hostel-checks li {
+                        margin-bottom: 0.5rem;
+                        padding-left: 1.7rem;
+                        position: relative;
+                    }
+
+                    .hostel-checks li::before {
+                        content: "✅";
+                        position: absolute;
+                        left: 0;
+                    }
+
+                    .hostel-level-badge {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 2.6rem;
+                        height: 2.6rem;
+                        border-radius: 0.8rem;
+                        background: #fff1e0;
+                        font-size: 1.3rem;
+                        margin-bottom: 0.7rem;
+                    }
+
+                    .hostel-method-card {
+                        background: #fff;
+                        border: 1px solid var(--hostel-border);
+                        border-radius: 1.1rem;
+                        padding: 1.4rem;
+                        text-align: center;
+                        height: 100%;
+                    }
+
+                    .hostel-method-emoji { font-size: 2.2rem; }
+
+                    .hostel-divider {
+                        height: 1px;
+                        background: linear-gradient(90deg, rgba(31, 22, 8, 0), rgba(31, 22, 8, 0.18), rgba(31, 22, 8, 0));
+                        margin: 1.4rem 0;
+                    }
+
+                    .hostel-offer {
+                        background: linear-gradient(135deg, #1f1608 0%, #7c2d12 100%);
+                        color: #fdf6ee;
+                        border-radius: 1.2rem;
+                        padding: 2.2rem;
+                        box-shadow: 0 22px 45px rgba(31, 22, 8, 0.3);
+                    }
+
+                    .hostel-offer .hostel-btn {
+                        background: #22c55e;
+                        color: #08260f;
+                        box-shadow: 0 8px 24px rgba(34, 197, 94, 0.35);
+                    }
+
+                    .hostel-founder-tag {
+                        display: inline-block;
+                        background: rgba(255, 255, 255, 0.16);
+                        border: 1px solid rgba(255, 255, 255, 0.3);
+                        border-radius: 999px;
+                        padding: 0.35rem 0.8rem;
+                        font-size: 0.85rem;
+                        font-weight: 700;
+                        margin-bottom: 0.6rem;
+                    }
+
+                    @media (max-width: 991.98px) {
+                        .hostel-hero-panel { padding: 1.3rem; }
+                        .hostel-image-card img { height: 190px; }
+                    }
+                </style>
+            </t>
+
+            <section class="hostel-landing">
+                <div class="container py-5 py-lg-6">
+
+                    <div class="hostel-section pt-2">
+                        <div class="row g-4 align-items-center">
+                            <div class="col-lg-7">
+                                <div class="hostel-hero-panel">
+                                    <span class="hostel-kicker">🍽️ Odoo Hostelería Academy + Mentoría 1:1</span>
+                                    <h1 class="hostel-hero-title">Deja de vivir apagando fuegos en tu restaurante</h1>
+                                    <p class="hostel-hero-sub mt-3 mb-2">
+                                        Si ahora mismo sientes que el restaurante depende de que estés presente para todo,
+                                        sospechas que pierdes dinero en mermas y stock (pero no sabes cuánto ni dónde), y
+                                        las cuentas del local no te cuadran... Odoo puede ayudarte. Este curso te lleva de
+                                        la mano, sin abrumarte, directo al grano.
+                                    </p>
+                                    <div class="mb-4 mt-3">
+                                        <span class="hostel-kicker">🧭 Diagnóstico guiado</span>
+                                        <span class="hostel-kicker">🎮 Academia gamificada</span>
+                                        <span class="hostel-kicker">👩‍🍳 Mentoría 1:1</span>
+                                    </div>
+
+                                    <div class="hostel-price-box mb-0">
+                                        <span class="hostel-founder-tag">🚀 Precio fundadora · válido hasta 30/09/2026</span>
+                                        <h2 class="mb-1">97 €</h2>
+                                        <p class="mb-2" style="opacity:0.9;">Acceso 1 año completo + mentoría 1:1</p>
+                                        <a href="/academy/inscripcion?curso=hosteleria" class="hostel-btn">🔥 QUIERO EL CONTROL DE MI RESTAURANTE</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="hostel-image-card">
+                                            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Restaurante con clientes y servicio activo"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="hostel-image-card">
+                                            <img src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Barista atendiendo en cafeteria"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="hostel-image-card">
+                                            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Cafeteria con servicio activo"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-lg-5">
-                            <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&amp;fit=crop&amp;w=1200&amp;q=80" alt="Curso hosteleria" class="img-fluid rounded-4 shadow-sm"/>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-4">😩 ¿Te suena familiar?</h2>
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="hostel-card">
+                                    <ul class="hostel-checks">
+                                        <li>Vives apagando fuegos y el negocio no funciona si tú no estás.</li>
+                                        <li>Sospechas que pierdes dinero en mermas y stock, pero no sabes cuánto ni dónde.</li>
+                                        <li>Las cuentas y los números del local no te cuadran o no los ves claros.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="hostel-card">
+                                    <ul class="hostel-checks">
+                                        <li>Sabes que Odoo puede ayudarte, pero te abruma y no sabes por dónde empezar ni qué módulos necesitas.</li>
+                                        <li>Te preocupa invertir dinero y tiempo montándolo mal.</li>
+                                        <li>Tomas decisiones a ojo, en lugar de con datos reales.</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-4">🎯 Lo que vas a conseguir</h2>
+                        <div class="row g-3">
+                            <div class="col-md-6"><div class="hostel-card">🕹️ Control de tu operación en las manos, no en la cabeza.</div></div>
+                            <div class="col-md-6"><div class="hostel-card">📊 Tus números claros: ventas, márgenes, escandallos e inventario.</div></div>
+                            <div class="col-md-6"><div class="hostel-card">🧾 Las paces con el TPV, funcionando como debe.</div></div>
+                            <div class="col-md-6"><div class="hostel-card">🧠 Decisiones con datos, no a ojo.</div></div>
+                        </div>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-2">🍳 Método MISE EN PLACE</h2>
+                        <p class="hostel-muted mb-4">Orden antes del servicio, como en toda buena cocina.</p>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="hostel-method-card">
+                                    <div class="hostel-method-emoji">🛠️</div>
+                                    <h3 class="h5 mt-2 mb-2">Montar</h3>
+                                    <p class="hostel-muted mb-0">Configuras tu Odoo con criterio, sabiendo qué módulos necesitas de verdad.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="hostel-method-card">
+                                    <div class="hostel-method-emoji">🍽️</div>
+                                    <h3 class="h5 mt-2 mb-2">Servir</h3>
+                                    <p class="hostel-muted mb-0">Lo pones a operar en tu día a día: TPV, salón, cocina y servicio real.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="hostel-method-card">
+                                    <div class="hostel-method-emoji">🚀</div>
+                                    <h3 class="h5 mt-2 mb-2">Escalar</h3>
+                                    <p class="hostel-muted mb-0">Lo escalas con automatización, CRM y campañas de fidelización.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="hostel-muted mt-3 mb-0">En esta parte del recorrido nos centramos en <strong>Montar</strong>: entender qué es Odoo, cómo se implementa y para qué sirve realmente en tu negocio.</p>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-4">💖 Estructura del programa</h2>
+                        <p class="hostel-muted mb-4">Avanzas solo por la academia gamificada, a tu ritmo, y la mentoría 1:1 se agenda cuando más te sirve.</p>
+                        <div class="row g-4">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="hostel-card">
+                                    <div class="hostel-level-badge">🧭</div>
+                                    <h4 class="h6 mb-2">Nivel 0 — Arquitecto Odoo</h4>
+                                    <p class="hostel-muted mb-0">Diagnóstico de módulos, edición y entorno listos.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="hostel-card">
+                                    <div class="hostel-level-badge">🏪</div>
+                                    <h4 class="h6 mb-2">Nivel 1 — Apertura del restaurante</h4>
+                                    <p class="hostel-muted mb-0">Empresa, usuarios y roles.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="hostel-card">
+                                    <div class="hostel-level-badge">🍽️</div>
+                                    <h4 class="h6 mb-2">Nivel 2 — El menú perfecto</h4>
+                                    <p class="hostel-muted mb-0">Categorías, platos, extras y combos.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="hostel-card">
+                                    <div class="hostel-level-badge">🧑‍🍳</div>
+                                    <h4 class="h6 mb-2">Nivel 3 — Maestro del TPV</h4>
+                                    <p class="hostel-muted mb-0">Mesas, salón, cocina y servicio real.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="hostel-card">
+                                    <div class="hostel-level-badge">📦</div>
+                                    <h4 class="h6 mb-2">Nivel 4 — Comprador inteligente</h4>
+                                    <p class="hostel-muted mb-0">Carga de proveedores, pedidos y recepciones.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="hostel-card">
+                                    <div class="hostel-level-badge">💌</div>
+                                    <h4 class="h6 mb-2">Nivel 5 — Experto en clientes</h4>
+                                    <p class="hostel-muted mb-0">CRM, puntos, cupones y campañas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-4">📦 Qué incluye</h2>
+                        <div class="hostel-card">
+                            <ul class="hostel-checks">
+                                <li>Acceso 1 año a la academia completa (vídeos, niveles, misiones).</li>
+                                <li>Diagnóstico guiado de módulos para tu tipo de local.</li>
+                                <li>Checklists de módulos: obligatorios, recomendados y avanzados.</li>
+                                <li>Insignias, sistema de XP y ranking gamificado.</li>
+                                <li>Mentoría 1:1 para revisar tu caso real y hacerlo bien a la primera.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="hostel-section pt-0 pb-5">
+                        <div class="hostel-offer">
+                            <span class="hostel-founder-tag">🚀 Precio fundadora · hasta el 30 de septiembre de 2026</span>
+                            <h2 class="mb-3">De desbordada a segura, con el control en tus manos</h2>
+                            <p class="mb-3" style="opacity:0.9;">
+                                Serás una de las primeras en participar. Pasarás de sentirte desbordada, apagando
+                                fuegos y con la sensación de que el restaurante depende solo de ti, a sentirte segura
+                                y con el control de tu operación en las manos, con alguien que revisa tu caso real
+                                para que lo hagas bien a la primera.
+                            </p>
+                            <p class="h4 mb-3">Solo 97 €</p>
+                            <a href="/academy/inscripcion?curso=hosteleria" class="hostel-btn">🔥 QUIERO ACCEDER AHORA</a>
+                        </div>
+                    </div>
+
                 </div>
             </section>
         </t>
