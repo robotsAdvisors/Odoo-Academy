@@ -888,6 +888,71 @@
                         margin-bottom: 0.6rem;
                     }
 
+                    .hostel-stat-card {
+                        background: #fff;
+                        border: 1px solid var(--hostel-border);
+                        border-radius: 1.1rem;
+                        padding: 1.6rem;
+                        text-align: center;
+                        height: 100%;
+                    }
+
+                    .hostel-stat-number {
+                        font-family: 'Sora', sans-serif;
+                        font-size: 2.4rem;
+                        font-weight: 800;
+                        color: var(--hostel-primary);
+                        line-height: 1;
+                        margin-bottom: 0.5rem;
+                    }
+
+                    .hostel-bonus-box {
+                        background: #fff7ed;
+                        border: 2px dashed var(--hostel-accent);
+                        border-radius: 1.2rem;
+                        padding: 2.2rem;
+                        text-align: center;
+                    }
+
+                    .hostel-bonus-ribbon {
+                        display: inline-block;
+                        background: var(--hostel-primary);
+                        color: #fff;
+                        border-radius: 999px;
+                        padding: 0.4rem 1rem;
+                        font-weight: 700;
+                        font-size: 0.85rem;
+                        margin-bottom: 1rem;
+                    }
+
+                    .hostel-bonus-quote {
+                        max-width: 620px;
+                        margin: 0 auto 1rem;
+                        font-style: italic;
+                        color: var(--hostel-muted);
+                    }
+
+                    .hostel-bonus-price {
+                        display: flex;
+                        align-items: baseline;
+                        justify-content: center;
+                        gap: 0.9rem;
+                        margin: 0.6rem 0 1rem;
+                    }
+
+                    .hostel-bonus-old {
+                        font-size: 1.6rem;
+                        text-decoration: line-through;
+                        color: var(--hostel-muted);
+                    }
+
+                    .hostel-bonus-new {
+                        font-size: 2.8rem;
+                        font-weight: 800;
+                        color: var(--hostel-primary);
+                        font-family: 'Sora', sans-serif;
+                    }
+
                     @media (max-width: 991.98px) {
                         .hostel-hero-panel { padding: 1.3rem; }
                         .hostel-image-card img { height: 190px; }
@@ -967,6 +1032,33 @@
                                         <li>Te preocupa invertir dinero y tiempo montándolo mal.</li>
                                         <li>Tomas decisiones a ojo, en lugar de con datos reales.</li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-2">🌍 Por qué apostar por Odoo</h2>
+                        <p class="hostel-muted mb-4">No es una apuesta a ciegas: es el ERP con más comunidad y más empresas detrás.</p>
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="hostel-stat-card">
+                                    <div class="hostel-stat-number">8M+</div>
+                                    <p class="mb-0">Usuarios de Odoo a nivel mundial.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="hostel-stat-card">
+                                    <div class="hostel-stat-number">1.500+</div>
+                                    <p class="mb-0">Miembros activos en la comunidad Odoo.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="hostel-stat-card">
+                                    <div class="hostel-stat-number">980</div>
+                                    <p class="mb-0">Empresas en España usan Odoo, con miles de usuarios activos cada mes.</p>
                                 </div>
                             </div>
                         </div>
@@ -1076,8 +1168,30 @@
                                 <li>Diagnóstico guiado de módulos para tu tipo de local.</li>
                                 <li>Checklists de módulos: obligatorios, recomendados y avanzados.</li>
                                 <li>Insignias, sistema de XP y ranking gamificado.</li>
-                                <li>Mentoría 1:1 para revisar tu caso real y hacerlo bien a la primera.</li>
+                                <li>Bonus: mentoría 1:1 de 45 min (valor 120 €) para revisar tu caso real y hacerlo bien a la primera.</li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <div class="hostel-bonus-box">
+                            <span class="hostel-bonus-ribbon">🎁 BONUS FUNDADORA · hasta el 30/09/2026</span>
+                            <h2 class="mb-3">Mentoría 1:1 de 45 minutos, incluida en tu precio fundadora</h2>
+                            <p class="hostel-bonus-quote">
+                                "De verdad quiero ayudarte: te incluyo una mentoría 1:1 de 45 minutos,
+                                valorada en 120 €, en 0 €."
+                            </p>
+                            <div class="hostel-bonus-price">
+                                <span class="hostel-bonus-old">120 €</span>
+                                <span class="hostel-bonus-new">0 €</span>
+                            </div>
+                            <p class="hostel-muted mb-0">
+                                Revisamos juntas tu caso real para que montes Odoo bien a la primera.
+                                Bonus disponible solo para quienes se inscriban al precio fundadora,
+                                antes del 30 de septiembre de 2026.
+                            </p>
                         </div>
                     </div>
 
