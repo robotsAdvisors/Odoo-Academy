@@ -953,6 +953,62 @@
                         font-family: 'Sora', sans-serif;
                     }
 
+                    .hostel-value-list {
+                        list-style: none;
+                        padding-left: 0;
+                        margin-bottom: 0;
+                    }
+
+                    .hostel-value-list li {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: baseline;
+                        gap: 1rem;
+                        padding: 0.7rem 0;
+                        border-bottom: 1px dashed var(--hostel-border);
+                    }
+
+                    .hostel-value-list li:first-child {
+                        padding-top: 0;
+                    }
+
+                    .hostel-value-list li::before {
+                        content: "✅ ";
+                    }
+
+                    .hostel-value-tag {
+                        white-space: nowrap;
+                        color: var(--hostel-muted);
+                        font-weight: 600;
+                    }
+
+                    .hostel-value-total {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: baseline;
+                        padding-top: 1rem;
+                    }
+
+                    .hostel-value-total-old {
+                        text-decoration: line-through;
+                        color: var(--hostel-muted);
+                    }
+
+                    .hostel-value-total-founder {
+                        margin-top: 0.3rem;
+                        padding-top: 0.8rem;
+                        border-top: 2px solid var(--hostel-border);
+                        font-size: 1.15rem;
+                        font-weight: 700;
+                    }
+
+                    .hostel-value-total-new {
+                        color: var(--hostel-primary);
+                        font-family: 'Sora', sans-serif;
+                        font-size: 1.6rem;
+                        font-weight: 800;
+                    }
+
                     @media (max-width: 991.98px) {
                         .hostel-hero-panel { padding: 1.3rem; }
                         .hostel-image-card img { height: 190px; }
@@ -1163,13 +1219,20 @@
                     <div class="hostel-section">
                         <h2 class="mb-4">📦 Qué incluye</h2>
                         <div class="hostel-card">
-                            <ul class="hostel-checks">
-                                <li>Acceso 1 año a la academia completa (vídeos, niveles, misiones).</li>
-                                <li>Diagnóstico guiado de módulos para tu tipo de local.</li>
-                                <li>Checklists de módulos: obligatorios, recomendados y avanzados.</li>
-                                <li>Insignias, sistema de XP y ranking gamificado.</li>
-                                <li>Bonus: mentoría 1:1 de 45 min (valor 120 €) para revisar tu caso real y hacerlo bien a la primera.</li>
+                            <ul class="hostel-value-list">
+                                <li><span>Acceso 1 año a la academia completa (vídeos, niveles, misiones).</span><span class="hostel-value-tag">Valor: 125 €</span></li>
+                                <li><span>Diagnóstico guiado de módulos para tu tipo de local.</span><span class="hostel-value-tag">Valor: 65 €</span></li>
+                                <li><span>Checklists de módulos: obligatorios, recomendados y avanzados.</span><span class="hostel-value-tag">Valor: 65 €</span></li>
+                                <li><span>Bonus: mentoría 1:1 de 45 min para revisar tu caso real y hacerlo bien a la primera.</span><span class="hostel-value-tag">Valor: 120 €</span></li>
                             </ul>
+                            <div class="hostel-value-total">
+                                <span>Precio real</span>
+                                <span class="hostel-value-total-old">375 €</span>
+                            </div>
+                            <div class="hostel-value-total hostel-value-total-founder">
+                                <span>🚀 Precio fundadora</span>
+                                <span class="hostel-value-total-new">97 €</span>
+                            </div>
                         </div>
                     </div>
 
@@ -1198,7 +1261,7 @@
                     <div class="hostel-section pt-0 pb-5">
                         <div class="hostel-offer">
                             <span class="hostel-founder-tag">🚀 Precio fundadora · hasta el 30 de septiembre de 2026</span>
-                            <h2 class="mb-3">De desbordada a segura, con el control en tus manos</h2>
+                            <h2 class="mb-3">Toma el control de tu cafetería y restaurante</h2>
                             <p class="mb-3" style="opacity:0.9;">
                                 Serás una de las primeras en participar. Pasarás de sentirte desbordada, apagando
                                 fuegos y con la sensación de que el restaurante depende solo de ti, a sentirte segura
