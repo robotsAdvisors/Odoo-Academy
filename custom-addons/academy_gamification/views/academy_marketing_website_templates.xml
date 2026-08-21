@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="academy_google_analytics" inherit_id="website.layout" name="Google Analytics (GA4)">
+        <xpath expr="//head" position="inside">
+            <script async="async" src="https://www.googletagmanager.com/gtag/js?id=G-3Z665QC78F"/>
+            <script type="text/javascript">
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-3Z665QC78F');
+            </script>
+        </xpath>
+    </template>
+
     <template id="digitaliza_tu_negocio_landing" name="Landing Curso Digitalizacion">
         <t t-call="website.layout">
             <t t-set="head">
@@ -1009,9 +1021,117 @@
                         font-weight: 800;
                     }
 
+                    .hostel-bio {
+                        display: flex;
+                        gap: 1.6rem;
+                        align-items: flex-start;
+                    }
+
+                    .hostel-bio-photo {
+                        width: 150px;
+                        height: 150px;
+                        min-width: 150px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        border: 4px solid #fff;
+                        box-shadow: 0 12px 28px rgba(124, 45, 18, 0.18);
+                    }
+
+                    .hostel-bio-linkedin {
+                        display: inline-block;
+                        background: #0a66c2;
+                        color: #fff !important;
+                        text-decoration: none;
+                        font-weight: 700;
+                        border-radius: 0.7rem;
+                        padding: 0.6rem 1.1rem;
+                        transition: transform 0.2s ease;
+                    }
+
+                    .hostel-bio-linkedin:hover {
+                        transform: translateY(-2px);
+                    }
+
+                    .hostel-video-wrap {
+                        position: relative;
+                        width: 100%;
+                        max-width: 720px;
+                        margin: 0 auto;
+                        padding-top: 40.5%;
+                        border-radius: 1rem;
+                        overflow: hidden;
+                        box-shadow: 0 18px 40px rgba(124, 45, 18, 0.18);
+                        background: #000;
+                    }
+
+                    .hostel-video-wrap iframe {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        height: 100%;
+                        border: 0;
+                    }
+
+                    .hostel-youtube-btn {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        background: #ff0000;
+                        color: #fff !important;
+                        text-decoration: none;
+                        font-weight: 700;
+                        border-radius: 0.7rem;
+                        padding: 0.75rem 1.2rem;
+                        transition: transform 0.2s ease;
+                    }
+
+                    .hostel-youtube-btn:hover {
+                        transform: translateY(-2px);
+                    }
+
+                    .hostel-popup-overlay {
+                        display: none;
+                        position: fixed;
+                        inset: 0;
+                        background: rgba(31, 22, 8, 0.6);
+                        z-index: 1050;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 1rem;
+                    }
+
+                    .hostel-popup-overlay.hostel-popup-visible {
+                        display: flex;
+                    }
+
+                    .hostel-popup-box {
+                        position: relative;
+                        background: #fdf6ee;
+                        border-radius: 1.2rem;
+                        max-width: 440px;
+                        width: 100%;
+                        padding: 2.2rem 1.8rem 1.8rem;
+                        text-align: center;
+                        box-shadow: 0 24px 60px rgba(31, 22, 8, 0.35);
+                    }
+
+                    .hostel-popup-close {
+                        position: absolute;
+                        top: 0.7rem;
+                        right: 0.9rem;
+                        background: none;
+                        border: 0;
+                        font-size: 1.4rem;
+                        line-height: 1;
+                        color: var(--hostel-muted);
+                        cursor: pointer;
+                    }
+
                     @media (max-width: 991.98px) {
                         .hostel-hero-panel { padding: 1.3rem; }
                         .hostel-image-card img { height: 190px; }
+                        .hostel-bio { flex-direction: column; align-items: center; text-align: center; }
+                        .hostel-video-wrap { padding-top: 56.25%; }
                     }
                 </style>
             </t>
@@ -1243,8 +1363,8 @@
                             <span class="hostel-bonus-ribbon">🎁 BONUS FUNDADORA · hasta el 30/09/2026</span>
                             <h2 class="mb-3">Mentoría 1:1 de 45 minutos, incluida en tu precio fundadora</h2>
                             <p class="hostel-bonus-quote">
-                                "De verdad quiero ayudarte: te incluyo una mentoría 1:1 de 45 minutos,
-                                valorada en 120 €, en 0 €."
+                                De verdad quiero ayudarte: te incluyo una mentoría 1:1 de 45 minutos,
+                                valorada en 120 €, en 0 €.
                             </p>
                             <div class="hostel-bonus-price">
                                 <span class="hostel-bonus-old">120 €</span>
@@ -1255,6 +1375,41 @@
                                 Bonus disponible solo para quienes se inscriban al precio fundadora,
                                 antes del 30 de septiembre de 2026.
                             </p>
+                        </div>
+                    </div>
+
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section">
+                        <h2 class="mb-4">👋 Quién te acompaña en la mentoría</h2>
+                        <div class="hostel-card">
+                            <div class="hostel-bio">
+                                <img class="hostel-bio-photo" src="/academy_gamification/static/img/oscarina-bio.jpg" alt="Oscarina Hernández"/>
+                                <div>
+                                    <h3 class="h5 mb-1">Oscarina Hernández</h3>
+                                    <p class="hostel-muted mb-3">Ingeniera · Consultora Odoo · Fundadora de RobotsConsultant</p>
+                                    <p class="mb-3">
+                                        Soy ingeniera y me apasiona la tecnología. Nací en Venezuela, pero me
+                                        considero del mundo: me mudé tantas veces que terminé echando raíces en
+                                        España. Llevo más de 15 años de experiencia profesional trabajando con
+                                        grandes empresas de tecnología como Emerson y Allen-Bradley.
+                                    </p>
+                                    <p class="mb-3">
+                                        Mi último gran proyecto, en Argentina, fue con YPF: "Estaciones del
+                                        Futuro" de YPF-Repsol, una experiencia que se quedó grabada en mi
+                                        corazón. A partir de ahí empecé a trabajar como consultora, ayudando a
+                                        otras empresas a implementar esa misma digitalización, porque hoy la
+                                        tecnología ya no es opcional.
+                                    </p>
+                                    <p class="mb-3">
+                                        Desde hace poco emprendo mi propio camino, junto a un pequeño equipo de
+                                        desarrolladores tan apasionados como yo, con un objetivo claro: llevar
+                                        estas tecnologías a negocios más pequeños, de la mano de Odoo y, ahora
+                                        también, de nuestra aliada la Inteligencia Artificial.
+                                    </p>
+                                    <a href="https://www.linkedin.com/in/ing-oscarina-hernandez/" target="_blank" rel="noopener" class="hostel-bio-linkedin">🔗 Conéctate conmigo en LinkedIn</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -1273,8 +1428,83 @@
                         </div>
                     </div>
 
+                    <div class="hostel-divider"/>
+
+                    <div class="hostel-section pb-2">
+                        <h2 class="mb-2">🎥 ¿Todavía no es tu momento?</h2>
+                        <p class="hostel-muted mb-4">
+                            No pasa nada. Mientras decides, puedes ver mis vídeos sobre Odoo en mi canal de
+                            YouTube. Aquí tienes un ejemplo de qué es Odoo para hostelería:
+                        </p>
+                        <div class="hostel-video-wrap mb-4">
+                            <iframe src="https://www.youtube.com/embed/ujSVBHHMDxI" title="Qué es Odoo para hostelería" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"/>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://www.youtube.com/@RobotsConsultants?sub_confirmation=1" target="_blank" rel="noopener" class="hostel-youtube-btn">▶️ Suscríbete a mi canal</a>
+                        </div>
+                    </div>
+
                 </div>
             </section>
+
+            <div id="hostel-exit-popup" class="hostel-popup-overlay">
+                <div class="hostel-popup-box">
+                    <button type="button" class="hostel-popup-close" aria-label="Cerrar">✕</button>
+                    <p class="mb-3" style="font-size:2rem;">🤖</p>
+                    <h3 class="h5 mb-2">¡Antes de que te vayas!</h3>
+                    <p class="mb-3">
+                        ¿Quieres digitalizar y automatizar tu negocio con Odoo e IA sin complicaciones?
+                        Te invito a suscribirte a mi canal para no perderte ningún consejo.
+                    </p>
+                    <a href="https://www.youtube.com/@RobotsConsultants?sub_confirmation=1" target="_blank" rel="noopener" class="hostel-youtube-btn">▶️ Suscribirme al canal</a>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                (() =&gt; {
+                    const overlay = document.getElementById('hostel-exit-popup');
+                    if (!overlay) {
+                        return;
+                    }
+                    const STORAGE_KEY = 'hostel_exit_popup_shown';
+                    let shown = false;
+                    try {
+                        shown = sessionStorage.getItem(STORAGE_KEY) === '1';
+                    } catch (e) {
+                        shown = false;
+                    }
+
+                    const showPopup = () =&gt; {
+                        if (shown) {
+                            return;
+                        }
+                        shown = true;
+                        try {
+                            sessionStorage.setItem(STORAGE_KEY, '1');
+                        } catch (e) {
+                            // sessionStorage no disponible: seguimos igual, solo no persiste
+                        }
+                        overlay.classList.add('hostel-popup-visible');
+                    };
+
+                    const hidePopup = () =&gt; {
+                        overlay.classList.remove('hostel-popup-visible');
+                    };
+
+                    document.addEventListener('mouseleave', (event) =&gt; {
+                        if (event.clientY &lt;= 0) {
+                            showPopup();
+                        }
+                    });
+
+                    overlay.querySelector('.hostel-popup-close').addEventListener('click', hidePopup);
+                    overlay.addEventListener('click', (event) =&gt; {
+                        if (event.target === overlay) {
+                            hidePopup();
+                        }
+                    });
+                })();
+            </script>
         </t>
     </template>
 
