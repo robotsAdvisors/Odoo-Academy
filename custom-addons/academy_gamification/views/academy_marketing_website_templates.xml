@@ -1052,6 +1052,23 @@
                         transform: translateY(-2px);
                     }
 
+                    .hostel-ypf-figure {
+                        margin: 0 0 1rem;
+                    }
+
+                    .hostel-ypf-img {
+                        width: 100%;
+                        max-width: 480px;
+                        border-radius: 0.9rem;
+                        display: block;
+                        box-shadow: 0 12px 28px rgba(124, 45, 18, 0.14);
+                        margin-bottom: 0.4rem;
+                    }
+
+                    .hostel-ypf-figure figcaption {
+                        font-size: 0.85rem;
+                    }
+
                     .hostel-video-wrap {
                         position: relative;
                         width: 100%;
@@ -1401,6 +1418,10 @@
                                         otras empresas a implementar esa misma digitalización, porque hoy la
                                         tecnología ya no es opcional.
                                     </p>
+                                    <figure class="hostel-ypf-figure mb-3">
+                                        <img class="hostel-ypf-img" src="/academy_gamification/static/img/ypf-estaciones-del-futuro.jpg" alt="Estaciones del Futuro, proyecto YPF-Repsol"/>
+                                        <figcaption class="hostel-muted">Estaciones del Futuro — proyecto YPF-Repsol (Argentina)</figcaption>
+                                    </figure>
                                     <p class="mb-3">
                                         Desde hace poco emprendo mi propio camino, junto a un pequeño equipo de
                                         desarrolladores tan apasionados como yo, con un objetivo claro: llevar
